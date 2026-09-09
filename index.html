@@ -1641,8 +1641,8 @@
               <span>이 기능은 시나리오 민감도 분석이다. 입력 지표를 가상으로 변화시켰을 때 산식상 위험도가 어떻게 달라지는지 확인하는 용도이며, 특정 정책의 인과효과를 추정하지 않는다.</span>
             </div>
             <div class="scenario-presets" aria-label="시나리오 프리셋">
-              <button class="preset-button" type="button" data-scenario-preset="down">하강 시나리오 -10%p</button>
-              <button class="preset-button" type="button" data-scenario-preset="up">상승 시나리오 +10%p</button>
+              <button class="preset-button" type="button" data-scenario-preset="down">등급 하강 조합 찾기</button>
+              <button class="preset-button" type="button" data-scenario-preset="up">등급 상승 조합 찾기</button>
               <button class="preset-button is-active" type="button" data-scenario-preset="reset">초기화 0%p</button>
             </div>
             <div class="sliders">
@@ -1771,6 +1771,19 @@
       ["storeDelta", "store"],
       ["salesDelta", "sales"]
     ];
+    const scenarioVariables = [
+      { inputId: "lodgingDelta", key: "lodging", label: "숙박업" },
+      { inputId: "fnbDelta", key: "fnb", label: "외식업 비중" },
+      { inputId: "fnbGrowthDelta", key: "fnbGrowth", label: "외식 증가율" },
+      { inputId: "visitDelta", key: "visit", label: "방문집중도" },
+      { inputId: "flowDelta", key: "flow", label: "유동인구 증가율" },
+      { inputId: "franchiseDelta", key: "franchise", label: "프랜차이즈" },
+      { inputId: "turnoverDelta", key: "turnover", label: "개폐업 회전율" },
+      { inputId: "mixDelta", key: "mix", label: "업종구성 전환도" },
+      { inputId: "storeDelta", key: "store", label: "점포수 변화율" },
+      { inputId: "salesDelta", key: "sales", label: "총매출 성장률" }
+    ];
+    const gradeOrder = { "정상": 0, "주의": 1, "경계": 2, "위험": 3 };
     const marketTypeByCode = {
       "3120022": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "치환 채널(외식·숙박 전환)이 이미 활성인 상권" },
       "3120031": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "치환 채널(외식·숙박 전환)이 이미 활성인 상권" },
@@ -1790,6 +1803,7 @@
       "3120105": { label: "유형 B · 방문 급증형", className: "is-visit", description: "방문은 몰리지만 업종 전환은 아직 초기인 상권", hybrid: true }
     };
     let activePreset = "reset";
+    let activeScenarioNote = "";
     let selectedCode = String(marketList()[0].상권_코드);
     let selectedVariable = variableDefs[0].key;
     let leafletMap = null;
@@ -2002,12 +2016,144 @@
       });
     }
 
-    function applyScenarioPreset(kind) {
-      const presetValue = kind === "down" ? -10 : kind === "up" ? 10 : 0;
-      scenarioSliders.forEach(([inputId]) => {
-        const input = document.getElementById(inputId);
-        if (input) input.value = presetValue;
+    function blankScenarioValues() {
+      return Object.fromEntries(scenarioVariables.map(item => [item.key, 0]));
+    }
+
+    function setScenarioValues(vals) {
+      scenarioVariables.forEach(item => {
+        const input = document.getElementById(item.inputId);
+        if (input) input.value = Number(vals[item.key] || 0);
       });
+    }
+
+    function scenarioStateKey(vals) {
+      return scenarioVariables.map(item => Number(vals[item.key] || 0)).join(",");
+    }
+
+    function scenarioDeltaText(vals) {
+      const parts = scenarioVariables
+        .filter(item => Number(vals[item.key] || 0) !== 0)
+        .map(item => `${item.label} ${fmtDelta(vals[item.key])}`);
+      return parts.length ? parts.join(", ") : "변화 없음";
+    }
+
+    function findGradeShiftScenario(m, weights, direction) {
+      const sign = direction === "down" ? -1 : 1;
+      const baseRisk = simulatedRisk(m, {}, weights);
+      const baseGrade = gradeByRisk(baseRisk);
+      const baseLevel = gradeOrder[baseGrade] ?? 0;
+      if (direction === "down" && baseLevel === 0) {
+        return {
+          achieved: false,
+          vals: blankScenarioValues(),
+          risk: baseRisk,
+          grade: baseGrade,
+          note: "현재 정상 등급이라 산식상 더 낮출 등급이 없다."
+        };
+      }
+      if (direction === "up" && baseLevel === 3) {
+        return {
+          achieved: false,
+          vals: blankScenarioValues(),
+          risk: baseRisk,
+          grade: baseGrade,
+          note: "현재 위험 등급이라 산식상 더 높은 등급이 없다."
+        };
+      }
+      const variables = scenarioVariables
+        .map(item => {
+          const vals = { [item.key]: sign };
+          const risk = simulatedRisk(m, vals, weights);
+          return {
+            ...item,
+            impact: direction === "down" ? baseRisk - risk : risk - baseRisk
+          };
+        })
+        .filter(item => item.impact > 0.0001)
+        .sort((a, b) => b.impact - a.impact);
+      if (!variables.length) {
+        return {
+          achieved: false,
+          vals: blankScenarioValues(),
+          risk: baseRisk,
+          grade: baseGrade,
+          note: "현재 선택 상권에서는 조절 가능한 방향의 위험도 변화가 계산되지 않는다."
+        };
+      }
+
+      const maxAbs = 25;
+      const maxActive = 4;
+      const maxTotal = maxAbs * maxActive;
+      const beamSize = 180;
+      let states = [{ vals: blankScenarioValues(), risk: baseRisk, grade: baseGrade, movement: 0, total: 0, activeCount: 0 }];
+      let bestProgress = states[0];
+      for (let total = 1; total <= maxTotal; total += 1) {
+        const next = [];
+        const achieved = [];
+        const seen = new Set();
+        states.forEach(state => {
+          variables.forEach(item => {
+            const current = Number(state.vals[item.key] || 0);
+            if (Math.abs(current) >= maxAbs) return;
+            const vals = { ...state.vals, [item.key]: current + sign };
+            const activeCount = scenarioVariables.filter(v => Number(vals[v.key] || 0) !== 0).length;
+            if (activeCount > maxActive) return;
+            const key = scenarioStateKey(vals);
+            if (seen.has(key)) return;
+            seen.add(key);
+            const risk = simulatedRisk(m, vals, weights);
+            const grade = gradeByRisk(risk);
+            const level = gradeOrder[grade] ?? 0;
+            const movement = direction === "down" ? baseRisk - risk : risk - baseRisk;
+            const candidate = { vals, risk, grade, movement, total, activeCount };
+            if (movement > (bestProgress.movement || 0)) bestProgress = candidate;
+            if ((direction === "down" && level < baseLevel) || (direction === "up" && level > baseLevel)) {
+              achieved.push(candidate);
+            } else {
+              next.push(candidate);
+            }
+          });
+        });
+        if (achieved.length) {
+          achieved.sort((a, b) => {
+            const riskSort = direction === "down" ? a.risk - b.risk : b.risk - a.risk;
+            return riskSort || a.activeCount - b.activeCount || a.total - b.total;
+          });
+          const best = achieved[0];
+          const label = direction === "down" ? "하강" : "상승";
+          return {
+            ...best,
+            achieved: true,
+            note: `${label} 조합: ${scenarioDeltaText(best.vals)} 적용 시 산식상 위험도 ${fmt1(baseRisk)}점 → ${fmt1(best.risk)}점, 등급 ${baseGrade} → ${best.grade}.`
+          };
+        }
+        next.sort((a, b) => b.movement - a.movement || a.activeCount - b.activeCount || a.total - b.total);
+        states = next.slice(0, beamSize);
+        if (!states.length) break;
+      }
+
+      const fallback = bestProgress || states[0];
+      const label = direction === "down" ? "하강" : "상승";
+      return {
+        ...fallback,
+        achieved: false,
+        note: `${label} 조합을 최대 ${maxActive}개 변수·각 ${maxAbs}%p 범위에서 탐색했지만 등급은 ${baseGrade}로 유지된다. 가장 큰 변화 조합은 ${scenarioDeltaText(fallback.vals)}이며 산식상 위험도는 ${fmt1(baseRisk)}점 → ${fmt1(fallback.risk)}점이다.`
+      };
+    }
+
+    function applyScenarioPreset(kind) {
+      if (kind === "reset") {
+        setScenarioValues(blankScenarioValues());
+        activeScenarioNote = "";
+        activePreset = kind;
+        updatePresetButtons();
+        updateSimulation();
+        return;
+      }
+      const result = findGradeShiftScenario(selected(), modeWeights(), kind);
+      setScenarioValues(result.vals || blankScenarioValues());
+      activeScenarioNote = result.note || "";
       activePreset = kind;
       updatePresetButtons();
       updateSimulation();
@@ -2034,6 +2180,9 @@
       });
       document.getElementById("marketSelect").addEventListener("change", event => {
         selectedCode = String(event.target.value);
+        activePreset = "custom";
+        activeScenarioNote = "";
+        updatePresetButtons();
         updateAll();
       });
       variableSelect.addEventListener("change", event => {
@@ -2044,6 +2193,7 @@
       scenarioSliders.forEach(([id]) => {
         document.getElementById(id).addEventListener("input", () => {
           activePreset = "custom";
+          activeScenarioNote = "";
           updatePresetButtons();
           updateSimulation();
         });
@@ -3213,7 +3363,6 @@
         return { label, risk, grade: gradeByRisk(risk), drop: baseRisk - risk };
       }).sort((a, b) => b.drop - a.drop);
       const best = oneStep[0];
-      const gradeOrder = { "정상": 0, "주의": 1, "경계": 2, "위험": 3 };
       const targetReached = oneStep.find(item => gradeOrder[item.grade] < gradeOrder[beforeGrade]);
       if (beforeGrade === "정상") {
         return `현재 정상 등급이다. 단일 변수 10%p 감축 기준으로는 ${best.label}을 낮출 때 위험도가 가장 크게 줄어든다(${fmt1(best.drop)}점 감소).`;
@@ -3271,8 +3420,9 @@
       document.getElementById("simBeforeGrade").innerHTML = `<span class="grade g-${beforeGrade}">${beforeGrade}</span>`;
       document.getElementById("simAfterGrade").innerHTML = `<span class="grade g-${afterGrade}">${afterGrade}</span>`;
       const diff = afterRisk - Number(m[f.risk] || 0);
+      const scenarioText = activeScenarioNote || mitigationHint(m, weights, beforeGrade);
       document.getElementById("simHint").textContent =
-        `현재 설정 변화: ${diff >= 0 ? "+" : ""}${fmt1(diff)}점. ` + mitigationHint(m, weights, beforeGrade);
+        `현재 설정 변화: ${diff >= 0 ? "+" : ""}${fmt1(diff)}점. ${scenarioText}`;
     }
 
     function updateAll() {
