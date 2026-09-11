@@ -4,8 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>투어리스티피케이션(Touristification) 위험도 대시보드</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="icon" type="image/png" href="favicon.png?v=black-t">
+  <link rel="apple-touch-icon" href="favicon.png?v=black-t">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@400;450;500;650;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
     :root {
@@ -728,6 +731,11 @@
       gap: 14px;
       align-items: start;
     }
+    .scenario-side-stack {
+      display: grid;
+      gap: 14px;
+      align-items: start;
+    }
     .scenario-alert {
       display: grid;
       gap: 6px;
@@ -800,6 +808,69 @@
       font-size: 24px;
       margin: 5px 0 8px;
       font-variant-numeric: tabular-nums;
+    }
+    .type-guide-panel {
+      overflow: hidden;
+    }
+    .type-guide-copy {
+      margin: -2px 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 700;
+    }
+    .type-guide-group {
+      display: grid;
+      gap: 8px;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+    }
+    .type-guide-group:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+    }
+    .type-guide-group strong {
+      color: #313946;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .type-guide-actions {
+      display: grid;
+      gap: 8px;
+    }
+    .type-guide-button {
+      appearance: none;
+      display: grid;
+      gap: 3px;
+      width: 100%;
+      border: 1px solid rgba(20, 20, 19, 0.12);
+      border-radius: 999px;
+      background: #ffffff;
+      color: #202936;
+      padding: 9px 13px;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(20, 20, 19, 0.04);
+      transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+    }
+    .type-guide-button b {
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 900;
+    }
+    .type-guide-button span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+    .type-guide-button:hover,
+    .type-guide-button:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(207, 69, 0, 0.34);
+      background: #fff6ed;
+      outline: none;
     }
     svg text {
       font-family: "Malgun Gothic", Arial, sans-serif;
@@ -1062,6 +1133,174 @@
       border-radius: 0 8px 8px 0;
       padding-top: 9px;
       padding-bottom: 9px;
+    }
+    .scenario-trend-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .scenario-quarter-card {
+      min-width: 0;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      padding: 12px;
+      display: grid;
+      gap: 7px;
+    }
+    .scenario-quarter-card span:first-child {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .scenario-quarter-card strong {
+      color: #121722;
+      font-size: 24px;
+      line-height: 1.05;
+      font-variant-numeric: tabular-nums;
+    }
+    .scenario-quarter-card small {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .scenario-trend-svg {
+      width: 100%;
+      height: 150px;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      margin-bottom: 12px;
+    }
+    .trajectory-card,
+    .policy-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+    .trajectory-card {
+      display: grid;
+      gap: 6px;
+    }
+    .trajectory-card strong,
+    .policy-card h3 {
+      font-size: 15px;
+      color: #151922;
+      font-weight: 900;
+    }
+    .trajectory-card span,
+    .policy-card p,
+    .policy-assumption {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      margin: 0;
+    }
+    .policy-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .policy-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    .policy-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border-radius: 999px;
+      background: #f1f4f8;
+      color: #4c5867;
+      padding: 4px 9px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .policy-list-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .policy-list {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      min-width: 0;
+    }
+    .policy-list strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #313946;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .policy-list ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #5f6b78;
+      font-size: 16px;
+      line-height: 1.62;
+      font-weight: 720;
+    }
+    #policyPackageTargets {
+      color: #2f3a47;
+      padding-left: 22px;
+    }
+    #policyPackageTargets li {
+      margin: 6px 0;
+    }
+    #policyPackageActions {
+      display: grid;
+      gap: 7px;
+      padding-left: 0;
+      list-style: none;
+    }
+    .policy-action-button {
+      appearance: none;
+      width: 100%;
+      margin: 1px 0;
+      padding: 8px 10px;
+      border: 1px solid rgba(20, 20, 19, 0.12);
+      border-radius: 999px;
+      background: #ffffff;
+      color: #2f3a47;
+      font: inherit;
+      font-weight: 850;
+      line-height: 1.35;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(20, 20, 19, 0.04);
+      transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+    }
+    .policy-action-button:hover,
+    .policy-action-button:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(207, 69, 0, 0.34);
+      background: #fff6ed;
+      outline: none;
+    }
+    .policy-assumption {
+      margin-top: 12px;
+      padding-top: 11px;
+      border-top: 1px solid var(--line);
+      font-weight: 800;
+    }
+    .scenario-control-title {
+      margin: 0 0 10px;
+      color: #313946;
+      font-size: 14px;
+      font-weight: 900;
     }
     input[type="range"] {
       accent-color: #72b7f8;
@@ -1340,12 +1579,450 @@
       font-size: 12px;
       line-height: 1.5;
     }
+
+    /* Mastercard-inspired warm editorial refresh */
+    :root {
+      --bg: #F3F0EE;
+      --surface: #FCFBFA;
+      --surface-2: #F7F3EF;
+      --nav: #FCFBFA;
+      --nav-deep: #FCFBFA;
+      --text: #141413;
+      --muted: #696969;
+      --line: rgba(20, 20, 19, 0.12);
+      --line-dark: rgba(20, 20, 19, 0.24);
+      --teal: #3860BE;
+      --teal-soft: #EEF2FB;
+      --blue: #3860BE;
+      --green: #507A5A;
+      --amber: #F79E1B;
+      --orange: #CF4500;
+      --red: #EB001B;
+      --purple: #6E5FA8;
+      --ramp-1: #F6E8E0;
+      --ramp-2: #F7C1A3;
+      --ramp-3: #F37338;
+      --ramp-4: #CF4500;
+      --ramp-5: #8F1F0A;
+      --shadow: 0 24px 48px rgba(20, 20, 19, 0.08);
+    }
+    html {
+      background: var(--bg);
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Sofia Sans", "Inter", "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+    }
+    .app-shell {
+      grid-template-columns: 286px minmax(0, 1fr);
+      gap: 24px;
+      padding: 24px;
+      background: var(--bg);
+    }
+    .side {
+      top: 24px;
+      height: calc(100vh - 48px);
+      padding: 28px 24px;
+      border: 1px solid var(--line);
+      border-radius: 40px;
+      background: rgba(252, 251, 250, 0.96);
+      color: var(--text);
+      box-shadow: 0 4px 24px rgba(20, 20, 19, 0.04);
+    }
+    .brand-mark {
+      width: 52px;
+      height: 38px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--text);
+      color: var(--bg);
+      box-shadow: none;
+      font-size: 19px;
+      font-weight: 800;
+    }
+    .brand-title {
+      color: var(--text);
+      font-size: 19px;
+      font-weight: 700;
+    }
+    .brand-sub,
+    .side-note {
+      color: var(--muted);
+    }
+    .side-note {
+      border-top-color: var(--line);
+    }
+    .nav-button {
+      min-height: 46px;
+      border-radius: 999px;
+      color: #3F3F3F;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: 650;
+    }
+    .nav-button::before {
+      width: 7px;
+      height: 7px;
+      background: #D1CDC7;
+      margin-right: 11px;
+    }
+    .nav-button.active {
+      background: var(--text);
+      color: var(--bg);
+      box-shadow: none;
+    }
+    .nav-button.active::before {
+      background: #F37338;
+    }
+    .main {
+      padding: 0;
+    }
+    .topbar {
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 24px 30px;
+      border: 1px solid var(--line);
+      border-radius: 40px;
+      background: rgba(252, 251, 250, 0.92);
+      box-shadow: 0 4px 24px rgba(20, 20, 19, 0.04);
+    }
+    .eyebrow {
+      color: #696969;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 8px;
+      border-radius: 999px;
+      background: #F37338;
+      vertical-align: 1px;
+    }
+    h1 {
+      color: var(--text);
+      font-size: 31px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+    h2 {
+      color: var(--text);
+      font-size: 20px;
+      font-weight: 650;
+    }
+    h3 {
+      color: var(--text);
+      font-weight: 650;
+    }
+    .subtitle,
+    .muted {
+      color: var(--muted);
+    }
+    select,
+    .formula-display {
+      border: 1.5px solid var(--line-dark);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--text);
+      box-shadow: none;
+    }
+    select {
+      height: 46px;
+      padding: 0 18px;
+    }
+    .formula-display {
+      min-height: 54px;
+      padding: 10px 18px;
+    }
+    .metric-grid {
+      gap: 18px;
+    }
+    .metric {
+      min-height: 140px;
+      border: 1px solid var(--line);
+      border-radius: 40px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      padding: 26px 28px;
+    }
+    .metric:nth-child(2) { background: #FFF6ED; }
+    .metric:nth-child(3) { background: #F8EFE7; }
+    .metric:nth-child(4) { background: #F7F3EF; }
+    .metric span {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .metric strong {
+      color: var(--text);
+      font-size: 36px;
+      font-weight: 650;
+    }
+    .metric small {
+      color: #555555;
+    }
+    .panel,
+    .mini-map-card,
+    .sim-card,
+    .risk-analysis-card {
+      border: 1px solid var(--line);
+      border-radius: 40px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .panel {
+      padding: 24px;
+    }
+    .panel-head {
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 18px;
+    }
+    .map-wrap,
+    .variable-map-wrap,
+    .story-map-wrap,
+    .mini-map,
+    .scenario-trend-svg {
+      border-color: var(--line);
+      border-radius: 40px;
+      background: #ffffff;
+    }
+    .leaflet-control-layers,
+    .leaflet-control-zoom {
+      border: 1px solid var(--line-dark) !important;
+      border-radius: 20px !important;
+      box-shadow: 0 4px 24px rgba(20, 20, 19, 0.08) !important;
+    }
+    .grade,
+    .type-badge,
+    .type-sub-badge,
+    .policy-pill {
+      border-radius: 999px;
+      box-shadow: none;
+      font-weight: 800;
+    }
+    .grade.g-정상 { background: #507A5A; color: #ffffff; }
+    .grade.g-주의 { background: #F79E1B; color: #141413; }
+    .grade.g-경계 { background: #CF4500; color: #ffffff; }
+    .grade.g-위험 { background: #EB001B; color: #ffffff; }
+    .type-badge.is-visit {
+      color: #141413;
+      background: #F6E8E0;
+    }
+    .type-badge.is-industry {
+      color: #ffffff;
+      background: #CF4500;
+    }
+    .type-badge.is-unclassified,
+    .policy-pill {
+      color: #565656;
+      background: #F4F4F4;
+    }
+    .bar-track,
+    .progress-track,
+    .mini-track {
+      background: #E6E0D8;
+    }
+    .bar-fill,
+    .progress-fill,
+    .mini-fill {
+      background: #141413;
+    }
+    .table-wrap {
+      border-top-color: var(--line);
+    }
+    table {
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    th {
+      background: #F7F3EF;
+      color: #696969;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    td {
+      border-top-color: var(--line);
+    }
+    tbody tr.selected {
+      background: #FFF6ED;
+    }
+    tbody tr:hover {
+      background: #FAF6F1;
+    }
+    .preset-button {
+      min-height: 42px;
+      border: 1.5px solid var(--text);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--text);
+      padding: 9px 18px;
+      font-size: 14px;
+      font-weight: 650;
+      box-shadow: none;
+    }
+    .preset-button:hover,
+    .preset-button.is-active {
+      border-color: var(--text);
+      background: var(--text);
+      color: var(--bg);
+    }
+    .scenario-alert {
+      border: 1px solid rgba(207, 69, 0, 0.28);
+      border-left: 5px solid #CF4500;
+      border-radius: 24px;
+      background: #FFF6ED;
+      color: var(--text);
+      box-shadow: none;
+    }
+    .scenario-alert strong {
+      color: var(--text);
+    }
+    .scenario-alert span {
+      color: #565656;
+      font-weight: 650;
+    }
+    .scenario-note,
+    .hint {
+      border-left-color: #3860BE;
+      background: #F5F7FC;
+      border-radius: 0 24px 24px 0;
+    }
+    .scenario-quarter-card,
+    .trajectory-card,
+    .policy-card,
+    .policy-list,
+    .analysis-kpi,
+    .factor-line {
+      border-color: var(--line);
+      border-radius: 24px;
+      background: #FAF7F3;
+    }
+    .scenario-quarter-card strong,
+    .sim-card strong,
+    .analysis-kpi strong {
+      font-weight: 650;
+    }
+    .story-map-card {
+      border-radius: 40px;
+      background: rgba(252, 251, 250, 0.88);
+    }
+    .story-marker {
+      border-radius: 50%;
+      background: #141413;
+      color: #F3F0EE;
+    }
+    .story-marker.is-active {
+      border-radius: 50%;
+      background: #CF4500;
+      box-shadow: 0 0 0 8px rgba(207, 69, 0, 0.18), 0 24px 48px rgba(20, 20, 19, 0.18);
+    }
+    body.modal-open {
+      overflow: hidden;
+    }
+    .policy-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      background: rgba(20, 20, 19, 0.42);
+      backdrop-filter: blur(10px);
+    }
+    .policy-modal {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      z-index: 4001;
+      width: min(680px, calc(100vw - 32px));
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(20, 20, 19, 0.12);
+      border-radius: 36px;
+      background: #FCFBFA;
+      color: var(--text);
+      box-shadow: 0 30px 90px rgba(20, 20, 19, 0.22);
+      padding: 30px;
+    }
+    .policy-modal[hidden],
+    .policy-modal-backdrop[hidden] {
+      display: none;
+    }
+    .policy-modal-close {
+      position: absolute;
+      right: 22px;
+      top: 20px;
+      min-height: 36px;
+      border: 1px solid rgba(20, 20, 19, 0.14);
+      border-radius: 999px;
+      background: #141413;
+      color: #FCFBFA;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .policy-modal-kicker {
+      display: inline-flex;
+      margin-bottom: 12px;
+      color: #CF4500;
+      font-size: 13px;
+      font-weight: 850;
+    }
+    .policy-modal h2 {
+      margin: 0 76px 10px 0;
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+    .policy-modal-summary {
+      margin: 0 0 20px;
+      color: #565656;
+      font-size: 15px;
+      line-height: 1.65;
+      font-weight: 650;
+    }
+    .policy-modal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .policy-modal-detail {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: #FAF7F3;
+      padding: 16px;
+    }
+    .policy-modal-detail strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 850;
+    }
+    .policy-modal-detail p {
+      margin: 0;
+      color: #626262;
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 620;
+    }
+    input[type="range"] {
+      accent-color: #CF4500;
+    }
     @media (max-width: 1180px) {
-      .app-shell { grid-template-columns: 1fr; }
+      .app-shell {
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
       .side {
         position: static;
         height: auto;
         padding: 16px 18px;
+        border-radius: 32px;
       }
       .side .brand-mark,
       .side-note { display: none; }
@@ -1355,6 +2032,7 @@
       .dashboard-grid,
       .scenario-grid,
       .top-risk-story { grid-template-columns: 1fr; }
+      .policy-modal-grid { grid-template-columns: 1fr; }
       .story-map-panel {
         position: static;
         min-height: auto;
@@ -1379,14 +2057,30 @@
       .controls { justify-content: start; min-width: 0; width: 100%; }
     }
     @media (max-width: 720px) {
+      .app-shell {
+        padding: 10px;
+        gap: 12px;
+      }
+      .side {
+        border-radius: 24px;
+      }
       .main { padding: 14px; }
       h1 { font-size: 22px; }
+      .topbar,
+      .metric,
+      .panel,
+      .mini-map-card,
+      .risk-analysis-card {
+        border-radius: 28px;
+      }
       .metric-grid,
       .grade-criteria,
       .variable-grid,
       .var-detail-grid,
       .top-risk-grid,
       .analysis-intro,
+      .scenario-trend-grid,
+      .policy-list-grid,
       .sliders,
       .sim-grid { grid-template-columns: 1fr; }
       select { min-width: 100%; }
@@ -1633,18 +2327,45 @@
         <div class="scenario-grid">
           <section class="panel">
             <div class="panel-head">
-              <h2>시나리오 민감도 분석</h2>
-              <span class="muted">백분위 -/+%p</span>
+              <h2>정책 패키지 검토</h2>
+              <span class="muted">최근 3분기 + 정책 가정</span>
             </div>
             <div class="scenario-alert" role="note" aria-label="시나리오 분석 해석 주의">
               <strong>해석 주의: 정책효과 추정 아님</strong>
-              <span>이 기능은 시나리오 민감도 분석이다. 입력 지표를 가상으로 변화시켰을 때 산식상 위험도가 어떻게 달라지는지 확인하는 용도이며, 특정 정책의 인과효과를 추정하지 않는다.</span>
+              <span>이 기능은 정책 패키지가 겨냥하는 지표가 개선된다는 가정하에서 산식상 위험도가 어떻게 달라지는지 확인하는 시나리오 민감도 분석이며, 특정 정책의 인과효과를 추정하지 않는다.</span>
             </div>
-            <div class="scenario-presets" aria-label="시나리오 프리셋">
-              <button class="preset-button" type="button" data-scenario-preset="down">등급 하강 조합 찾기</button>
-              <button class="preset-button" type="button" data-scenario-preset="up">등급 상승 조합 찾기</button>
+            <div id="scenarioTrendCards" class="scenario-trend-grid" aria-label="최근 3분기 위험도"></div>
+            <svg id="scenarioTrendSvg" class="scenario-trend-svg" role="img" aria-label="최근 3분기 위험도 변화"></svg>
+            <article class="trajectory-card">
+              <strong id="scenarioTrajectoryLabel"></strong>
+              <span id="scenarioTrajectoryText"></span>
+            </article>
+            <article class="policy-card">
+              <div class="policy-card-head">
+                <div>
+                  <h3 id="policyPackageTitle"></h3>
+                  <p id="policyPackageSummary"></p>
+                </div>
+                <div id="scenarioTypeBadge" class="policy-chip-row"></div>
+              </div>
+              <div class="policy-list-grid">
+                <div class="policy-list">
+                  <strong>감시 지표</strong>
+                  <ul id="policyPackageTargets"></ul>
+                </div>
+                <div class="policy-list">
+                  <strong>검토 수단</strong>
+                  <ul id="policyPackageActions"></ul>
+                </div>
+              </div>
+              <p id="policyAssumptionText" class="policy-assumption"></p>
+            </article>
+            <div class="scenario-presets" aria-label="정책 패키지 적용">
+              <button class="preset-button" type="button" data-scenario-preset="recommended">권장 패키지 적용</button>
+              <button class="preset-button" type="button" data-scenario-preset="strong">강화 패키지 적용</button>
               <button class="preset-button is-active" type="button" data-scenario-preset="reset">초기화 0%p</button>
             </div>
+            <p class="scenario-control-title">정책 목표 지표 조정</p>
             <div class="sliders">
               <label>숙박업 <span id="lodgingText">0%p</span><input id="lodgingDelta" type="range" min="-25" max="25" value="0" step="1"></label>
               <label>외식업 비중 <span id="fnbText">0%p</span><input id="fnbDelta" type="range" min="-25" max="25" value="0" step="1"></label>
@@ -1658,21 +2379,80 @@
               <label>총매출 성장률 <span id="salesText">0%p</span><input id="salesDelta" type="range" min="-25" max="25" value="0" step="1"></label>
             </div>
           </section>
-          <section class="panel">
-            <div class="panel-head">
-              <h2>변화 결과</h2>
-              <span id="scenarioMarketLabel" class="muted"></span>
-            </div>
-            <div class="sim-grid">
-              <div class="sim-card"><span>현재</span><strong id="simBefore"></strong><span id="simBeforeGrade"></span></div>
-              <div class="sim-card"><span>변화 후</span><strong id="simAfter"></strong><span id="simAfterGrade"></span></div>
-            </div>
-            <p id="simHint" class="muted hint"></p>
-          </section>
+          <div class="scenario-side-stack">
+            <section class="panel">
+              <div class="panel-head">
+                <h2>정책 가정 적용 결과</h2>
+                <span id="scenarioMarketLabel" class="muted"></span>
+              </div>
+              <div class="sim-grid">
+                <div class="sim-card"><span>현재</span><strong id="simBefore"></strong><span id="simBeforeGrade"></span></div>
+                <div class="sim-card"><span>변화 후</span><strong id="simAfter"></strong><span id="simAfterGrade"></span></div>
+              </div>
+              <p id="simHint" class="muted hint"></p>
+            </section>
+
+            <section class="panel type-guide-panel">
+              <div class="panel-head">
+                <h2>유형의 의미</h2>
+                <span class="muted">클릭해서 확인</span>
+              </div>
+              <p class="type-guide-copy">상권 유형, 정책 패키지, 최근 위험도 흐름을 구분해 해석한다.</p>
+              <div class="type-guide-group">
+                <strong>상권 구조 유형</strong>
+                <div class="type-guide-actions">
+                  <button class="type-guide-button" type="button" data-type-detail="structure-a" aria-haspopup="dialog"><b>유형 A · 업종 관광화형</b><span>외식·숙박 전환이 이미 활성인 상권</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="structure-b" aria-haspopup="dialog"><b>유형 B · 방문 급증형</b><span>방문은 몰리지만 업종 전환은 초기인 상권</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="structure-unclassified" aria-haspopup="dialog"><b>유형 미분류</b><span>A/B 구조가 뚜렷하지 않은 상권</span></button>
+                </div>
+              </div>
+              <div class="type-guide-group">
+                <strong>정책 패키징 유형</strong>
+                <div class="type-guide-actions">
+                  <button class="type-guide-button" type="button" data-type-detail="package-a" aria-haspopup="dialog"><b>A 패키지</b><span>업종 관광화 대응</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="package-b" aria-haspopup="dialog"><b>B 패키지</b><span>방문 급증 관리</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="package-c" aria-haspopup="dialog"><b>C 패키지</b><span>생활환경 보호 모니터링</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="package-basic" aria-haspopup="dialog"><b>기본 패키지</b><span>상권 변화 모니터링</span></button>
+                </div>
+              </div>
+              <div class="type-guide-group">
+                <strong>최근 위험도 추세 유형</strong>
+                <div class="type-guide-actions">
+                  <button class="type-guide-button" type="button" data-type-detail="trend-rising" aria-haspopup="dialog"><b>위험 상승형</b><span>최근 위험도가 상승하는 흐름</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="trend-persistent" aria-haspopup="dialog"><b>고위험 고착형</b><span>위험·경계권이 지속되는 흐름</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="trend-easing" aria-haspopup="dialog"><b>위험 완화형</b><span>최근 위험도가 낮아지는 흐름</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="trend-exposure" aria-haspopup="dialog"><b>관광노출 관리형</b><span>관광 노출은 있으나 거주취약은 낮은 상태</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="trend-monitoring" aria-haspopup="dialog"><b>모니터링형</b><span>뚜렷한 급변 없이 관찰이 필요한 상태</span></button>
+                </div>
+              </div>
+            </section>
+          </div>
         </div>
       </section>
     </main>
   </div>
+
+  <div id="policyModalBackdrop" class="policy-modal-backdrop" hidden></div>
+  <section id="policyModal" class="policy-modal" role="dialog" aria-modal="true" aria-labelledby="policyModalTitle" hidden>
+    <button id="policyModalClose" class="policy-modal-close" type="button">닫기</button>
+    <span id="policyModalKicker" class="policy-modal-kicker">정책 검토 수단</span>
+    <h2 id="policyModalTitle"></h2>
+    <p id="policyModalSummary" class="policy-modal-summary"></p>
+    <div class="policy-modal-grid">
+      <div class="policy-modal-detail">
+        <strong id="policyModalPurposeLabel">적용 목적</strong>
+        <p id="policyModalPurpose"></p>
+      </div>
+      <div class="policy-modal-detail">
+        <strong id="policyModalOperationLabel">운용 방식</strong>
+        <p id="policyModalOperation"></p>
+      </div>
+      <div class="policy-modal-detail">
+        <strong id="policyModalIndicatorsLabel">확인 지표</strong>
+        <p id="policyModalIndicators"></p>
+      </div>
+    </div>
+  </section>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.2/proj4.js"></script>
@@ -1802,6 +2582,208 @@
       "3110131": { label: "유형 B · 방문 급증형", className: "is-visit", description: "방문은 몰리지만 업종 전환은 아직 초기인 상권" },
       "3120105": { label: "유형 B · 방문 급증형", className: "is-visit", description: "방문은 몰리지만 업종 전환은 아직 초기인 상권", hybrid: true }
     };
+    const policyDetails = {
+      "장기안심상가 및 상생협약": {
+        summary: "임대료 급등과 임차인 교체가 업종 관광화로 이어지는 것을 늦추기 위한 상생형 임대 안정 장치다.",
+        purpose: "외식·숙박·프랜차이즈 비중이 높은 상권에서 생활밀착업종과 기존 점포의 이탈 위험을 낮춘다.",
+        operation: "임대인·임차인·자치구가 임대료 인상 억제, 계약 갱신 협력, 상생협약 이행 조건을 정하고 우수 협약 상가에는 행정·홍보·시설개선 지원을 연계한다.",
+        indicators: "외식업 비중, 숙박업 비중, 프랜차이즈 비율, 개폐업 회전율, 거주취약 점수"
+      },
+      "앵커시설 매입·임대": {
+        summary: "공공이 핵심 입지를 확보해 주민 생활에 필요한 점포나 지역 기반 시설을 장기적으로 유지하는 방식이다.",
+        purpose: "관광 소비 업종으로 빠르게 치환되는 구간에서 생활서비스 공백과 지역 정체성 약화를 완화한다.",
+        operation: "자치구 또는 공공기관이 빈 점포·핵심 상가를 매입하거나 장기 임차한 뒤, 생활밀착업종·지역상생 점포·공공 문화거점에 안정적으로 재임대한다.",
+        indicators: "생활밀착업종 감소 여부, 업종구성 전환도, 점포수 변화율, 임대료 상승 신호"
+      },
+      "생활밀착업종 보호구역 검토": {
+        summary: "주민 일상에 필요한 업종이 사라지는 구간을 별도로 관리해 관광업종 편중을 완화하는 검토 수단이다.",
+        purpose: "약국, 세탁, 마트, 의원, 문구, 철물 등 생활기반 업종의 급격한 감소를 조기에 막는다.",
+        operation: "상권 내 생활서비스 취약 구간을 지정 후보로 두고 신규 지원, 입점 유도, 용도·영업질서 관리 가능성, 공공임대 연계를 함께 검토한다.",
+        indicators: "생활밀착업종 수 변화, 외식·숙박 비중, 업종구성 전환도, 거주취약 점수"
+      },
+      "상가임대차 분쟁조정 연계": {
+        summary: "임대료 인상, 계약 갱신 갈등, 권리금 분쟁 등으로 발생하는 기존 점포 이탈을 줄이는 지원 창구다.",
+        purpose: "개폐업 회전율이 높고 기존 임차인의 퇴출 압력이 커지는 상권에서 사후 피해를 낮춘다.",
+        operation: "분쟁 조정기관, 법률 상담, 임대차 보호제도 안내를 연결하고 반복 민원이 발생하는 구간은 현장조사 대상에 올린다.",
+        indicators: "개폐업 회전율, 점포수 변화율, 프랜차이즈 비율, 임대료 관련 민원"
+      },
+      "보행 동선 분산과 안내체계 정비": {
+        summary: "방문객을 한 골목이나 주거지 인접 구간에 몰리지 않게 유도하는 혼잡 완화 수단이다.",
+        purpose: "방문집중도와 유동인구 증가율이 높은 상권에서 생활공간 침범과 보행 혼잡을 줄인다.",
+        operation: "안내 표지, 추천 동선, 보행 방향, 대기 공간, 지하철·버스 접근 동선을 조정해 방문 흐름을 여러 구간으로 분산한다.",
+        indicators: "방문집중도, 유동인구 증가율, 시간대별 혼잡, 보행 민원"
+      },
+      "쓰레기·소음·야간안전 관리": {
+        summary: "방문 급증이 주민 생활환경 악화로 번지는 것을 막는 현장 관리 패키지다.",
+        purpose: "관광객 총량을 직접 줄이기보다 주민이 체감하는 쓰레기, 소음, 야간 안전 문제를 낮춘다.",
+        operation: "집중 수거 시간 조정, 임시 분리수거 거점, 야간 순찰, 소음 계도, 영업장 주변 관리 협약을 결합한다.",
+        indicators: "야간 유동, 민원 건수, 쓰레기 배출량, 방문집중도"
+      },
+      "A유형 전환 신호 확인 시 A 패키지 별도 검토": {
+        summary: "방문 급증형 상권이 외식·숙박 중심의 업종 관광화형으로 넘어가는지 확인하는 조건부 대응이다.",
+        purpose: "방문 증가만으로 강한 규제를 적용하지 않고, 업종 치환 신호가 확인될 때 직접 개입으로 전환한다.",
+        operation: "외식·숙박 비중, 외식업 증가율, 업종구성 전환도, 생활밀착업종 감소가 동시에 나타나는지를 분기별로 점검한다.",
+        indicators: "외식업 비중, 외식업 증가율, 숙박업 비중, 업종구성 전환도"
+      },
+      "전환 신호 발생 시 A 패키지 발동": {
+        summary: "방문 급증형 상권에서 업종 치환이 확인될 경우 업종 관광화 대응 패키지로 전환하는 기준이다.",
+        purpose: "초기 혼잡 관리 단계에서 사후 치환 대응 단계로 넘어가는 정책 시점을 명확히 한다.",
+        operation: "관광소비압력과 거주취약이 함께 상승하고 생활밀착업종 감소가 확인되면 장기안심상가, 상생협약, 앵커시설 확보를 우선 검토한다.",
+        indicators: "관광소비압력, 거주취약 점수, 생활밀착업종 감소, 개폐업 회전율"
+      },
+      "단기 이벤트 집중구간 모니터링": {
+        summary: "축제, 팝업, 대형 행사처럼 일시적으로 방문 수요가 폭증하는 구간을 따로 관찰하는 수단이다.",
+        purpose: "상시적 관광화와 일시적 이벤트 효과를 구분해 과잉 대응을 줄인다.",
+        operation: "행사 기간 전후 유동인구, 민원, 매출, 야간 혼잡을 비교하고 반복적으로 압력이 쌓이는 구간만 후속 관리 대상으로 올린다.",
+        indicators: "이벤트 전후 유동인구 증가율, 방문집중도, 민원, 개폐업 회전율"
+      },
+      "주거지 인접 동선 분산": {
+        summary: "관광 노출이 있는 상권에서 방문 흐름이 주거 골목으로 들어가는 것을 줄이는 생활권 보호 수단이다.",
+        purpose: "거주취약이 아직 낮은 상권에서 생활환경 악화를 예방하고 주민 수용성을 높인다.",
+        operation: "주거지 인접 골목은 우회 안내를 두고 상업가로·대중교통축 중심으로 이동 흐름을 유도한다.",
+        indicators: "주거지 인접 유동, 야간 유동, 민원, 방문집중도"
+      },
+      "정온구역·생활환경 관리": {
+        summary: "소음과 야간 혼잡에 민감한 주거 인접 구간을 정온 관리 대상으로 두는 방식이다.",
+        purpose: "관광 노출이 주거 만족도 저하로 이어지기 전에 생활환경 리스크를 낮춘다.",
+        operation: "야간 소음 안내, 단체 방문 자제 안내, 쓰레기·흡연 관리, 촬영·대기 행위 계도를 구역 특성에 맞춰 운영한다.",
+        indicators: "야간 민원, 소음 민원, 쓰레기 민원, 방문집중도"
+      },
+      "혼잡 민원 및 단기 체류 압력 점검": {
+        summary: "데이터상 방문 압력과 실제 현장 민원이 일치하는지 확인하는 현장 검증 절차다.",
+        purpose: "지표만으로 위험을 확정하지 않고 주민 체감 문제와 행정 민원을 함께 확인한다.",
+        operation: "혼잡·소음·쓰레기·불법 주정차 민원을 분기별 위험도와 대조하고, 불일치 지역은 현장조사로 원인을 확인한다.",
+        indicators: "민원 유형별 건수, 방문집중도, 유동인구 증가율, 시간대별 체류"
+      },
+      "A/B 유형 전환 여부 분기별 확인": {
+        summary: "저강도 관리 대상이 업종 관광화형 또는 방문 급증형으로 바뀌는지 주기적으로 확인하는 절차다.",
+        purpose: "현재 위험이 낮더라도 급격한 상권 변화를 놓치지 않도록 조기경보 체계를 유지한다.",
+        operation: "분기별 위험도, 관광소비압력, 방문압력, 거주취약 점수를 비교해 등급·유형 상승 여부를 검토한다.",
+        indicators: "위험도 등급, 관광소비압력, 방문압력, 거주취약 점수"
+      },
+      "분기별 지표 점검": {
+        summary: "아직 고위험 구조가 뚜렷하지 않은 상권을 낮은 강도로 추적하는 기본 모니터링이다.",
+        purpose: "위험 징후가 약한 상권도 갑작스러운 변화가 생기면 빠르게 포착한다.",
+        operation: "각 분기 말 위험도와 핵심 지표를 갱신하고 전분기 대비 급등 지표가 있는지 확인한다.",
+        indicators: "위험도, 점포수 변화율, 외식업 증가율, 업종구성 전환도"
+      },
+      "생활밀착업종 감소 여부 확인": {
+        summary: "주민 생활에 필요한 업종이 줄어드는지를 별도로 확인해 관광화의 생활권 영향을 검증하는 절차다.",
+        purpose: "단순 상권 성장과 주민 생활기반 약화를 구분한다.",
+        operation: "약국, 세탁, 마트, 의원, 학원 등 생활밀착업종 수와 비중의 분기별 변화를 확인하고 감소가 누적되면 보호 수단을 검토한다.",
+        indicators: "생활밀착업종 수 변화, 생활밀착업종 비중, 업종구성 전환도"
+      },
+      "위험 등급 상승 시 유형 재분류": {
+        summary: "정상·주의 상권이 경계·위험으로 올라갈 경우 어떤 압력이 주도했는지 다시 분류하는 절차다.",
+        purpose: "등급 상승 원인에 맞는 정책 패키지를 선택하기 위해 방문형과 업종 관광화형을 구분한다.",
+        operation: "상승 직전 2개 분기와 현재 분기의 관광소비압력, 방문압력, 성장과열압력, 거주취약을 비교해 유형을 갱신한다.",
+        indicators: "등급 변화, 관광소비압력, 방문압력, 성장과열압력, 거주취약 점수"
+      },
+      "현장조사 후보군으로 보류": {
+        summary: "데이터만으로 즉시 개입하기 애매한 상권을 현장 확인 후보로 남겨두는 판단이다.",
+        purpose: "과잉 개입을 피하면서도 데이터상 이상 신호가 있는 곳을 관리 목록에서 놓치지 않는다.",
+        operation: "등급이 상승하거나 주요 지표가 급등할 때 현장조사, 주민·상인 인터뷰, 민원 자료 확인 대상으로 전환한다.",
+        indicators: "위험도 변화, 주요 지표 급등, 민원, 현장조사 필요성"
+      }
+    };
+    const typeMeaningDetails = {
+      "structure-a": {
+        group: "상권 구조 유형",
+        title: "유형 A · 업종 관광화형",
+        summary: "외식·숙박 등 관광소비 업종의 비중이나 전환 신호가 이미 높은 상권이다.",
+        meaning: "방문객 수 증가보다 업종 구성 자체가 관광 소비 중심으로 바뀌는 현상이 핵심이다. 생활밀착업종이 밀려나고 관광객 대상 업종이 고착될 가능성이 크다.",
+        policy: "혼잡 관리만으로는 부족하므로 장기안심상가, 상생협약, 앵커시설 확보, 생활밀착업종 보호처럼 업종 치환을 직접 늦추는 정책을 우선 검토한다.",
+        use: "관광소비압력, 외식업 비중, 숙박업 비중, 프랜차이즈 비율, 업종구성 전환도, 거주취약 점수를 함께 확인한다."
+      },
+      "structure-b": {
+        group: "상권 구조 유형",
+        title: "유형 B · 방문 급증형",
+        summary: "방문집중도와 유동인구 압력은 높지만 업종 관광화가 아직 확정적으로 굳어진 단계는 아닌 상권이다.",
+        meaning: "관광객 또는 외부 방문자의 유입이 빠르게 늘지만, 이를 곧바로 주민 이탈이나 업종 치환의 결과로 해석하기는 이르다.",
+        policy: "방문객 총량 규제보다 보행 동선 분산, 쓰레기·소음·야간안전 관리, 단기 이벤트 모니터링을 우선 적용하고 A유형 전환 신호를 감시한다.",
+        use: "방문집중도, 유동인구 증가율, 야간·주말 혼잡, 외식·숙박 비중 상승 전환 여부를 함께 본다."
+      },
+      "structure-unclassified": {
+        group: "상권 구조 유형",
+        title: "유형 미분류",
+        summary: "유형 A 또는 유형 B로 단정할 만큼 관광화 구조가 뚜렷하지 않은 상권이다.",
+        meaning: "현재 데이터상 특정 관광화 경로가 강하게 드러나지 않는다. 다만 일부 지표가 움직일 수 있으므로 완전히 정책 관심 밖으로 두지는 않는다.",
+        policy: "즉각적 개입보다 기본 모니터링을 적용하고, 위험 등급이 상승하거나 특정 압력이 급등할 때 유형을 재분류한다.",
+        use: "위험도 등급 변화, 업종구성 전환도, 개폐업 회전율, 외식업 증가율을 분기별로 확인한다."
+      },
+      "package-a": {
+        group: "정책 패키징 유형",
+        title: "A 패키지 · 업종 관광화 대응",
+        summary: "관광소비 업종으로의 치환과 거주취약이 함께 나타나는 상권에 적용하는 직접 대응 패키지다.",
+        meaning: "상권의 문제가 단순 방문 증가가 아니라 업종 구조 변화와 생활기반 약화로 이어질 가능성이 큰 상태다.",
+        policy: "장기안심상가, 지역상생협약, 앵커시설 매입·임대, 생활밀착업종 보호구역 검토처럼 기존 점포와 생활서비스를 지키는 수단을 묶어 검토한다.",
+        use: "외식업 비중·증가율, 숙박업 비중, 프랜차이즈 비율, 업종구성 전환도, 거주취약 점수가 높은지 확인한다."
+      },
+      "package-b": {
+        group: "정책 패키징 유형",
+        title: "B 패키지 · 방문 급증 관리",
+        summary: "방문 압력이 큰 상권에서 혼잡과 생활환경 문제를 우선 관리하는 패키지다.",
+        meaning: "현재 핵심 문제는 업종 치환보다 방문객 집중에서 발생하는 보행, 소음, 쓰레기, 야간 안전 문제일 가능성이 크다.",
+        policy: "보행 동선 분산, 안내체계 정비, 쓰레기·소음 관리, 단기 이벤트 집중구간 모니터링을 적용하고 A유형 전환 여부를 별도로 감시한다.",
+        use: "방문집중도, 유동인구 증가율, 야간·주말 혼잡 관련 지표, 외식·숙박 비중 상승 전환 여부를 확인한다."
+      },
+      "package-c": {
+        group: "정책 패키징 유형",
+        title: "C 패키지 · 생활환경 보호 모니터링",
+        summary: "관광 노출은 있으나 거주취약이 낮은 상권에 적용하는 예방적 관리 패키지다.",
+        meaning: "관광 압력이 존재하지만 아직 주민 이탈 위험으로 강하게 연결되지는 않은 상태다.",
+        policy: "주거지 인접 동선 분산, 정온구역 관리, 혼잡 민원 점검 등 생활환경 악화를 막는 낮은 강도의 정책을 우선 검토한다.",
+        use: "방문압력, 관광소비압력, 거주취약 점수, 민원, 야간 유동의 변화가 함께 상승하는지 확인한다."
+      },
+      "package-basic": {
+        group: "정책 패키징 유형",
+        title: "기본 패키지 · 상권 변화 모니터링",
+        summary: "고위험 구조가 아직 뚜렷하지 않은 상권을 정기적으로 관찰하기 위한 기본 패키지다.",
+        meaning: "현 시점에서는 강한 정책 개입보다 데이터 변화를 누적해 조기 신호를 포착하는 것이 적절한 상태다.",
+        policy: "분기별 지표 점검, 생활밀착업종 감소 여부 확인, 위험 등급 상승 시 유형 재분류, 현장조사 후보군 보류를 적용한다.",
+        use: "위험도 변화, 외식업 증가율, 점포수 변화율, 개폐업 회전율, 업종구성 전환도를 본다."
+      },
+      "trend-rising": {
+        group: "최근 위험도 추세 유형",
+        title: "위험 상승형",
+        summary: "최근 3분기 동안 위험도 점수나 등급이 상승하는 흐름이다.",
+        meaning: "현재 등급만으로는 놓칠 수 있는 상승세를 보여준다. 아직 위험 단계가 아니더라도 선제 점검이 필요할 수 있다.",
+        policy: "최근 상승을 이끈 변수를 확인하고, 상승 원인이 방문압력인지 업종전환압력인지에 따라 B 패키지 또는 A 패키지 검토로 연결한다.",
+        use: "2025Q3, 2025Q4, 2026Q1 위험도와 등급 변화를 비교해 상승 폭과 상승 원인을 확인한다."
+      },
+      "trend-persistent": {
+        group: "최근 위험도 추세 유형",
+        title: "고위험 고착형",
+        summary: "최근 3분기 동안 위험·경계권에 계속 머무른 상권이다.",
+        meaning: "일시적 변동보다 구조적 압력과 거주취약이 함께 유지되는 상태로 해석할 수 있다.",
+        policy: "현장조사 우선순위를 높이고, 단기 관리보다 업종·임대·생활환경을 묶은 중기 대응이 필요한지 검토한다.",
+        use: "위험도, 최종압력, 거주취약, 민감도 안정성을 함께 확인해 위험이 안정적으로 높은지 판단한다."
+      },
+      "trend-easing": {
+        group: "최근 위험도 추세 유형",
+        title: "위험 완화형",
+        summary: "최근 3분기 동안 위험도 점수나 등급이 낮아지는 흐름이다.",
+        meaning: "위험이 완화되는 방향이지만 일시적 하락일 수 있으므로 재상승 여부를 확인해야 한다.",
+        policy: "강한 신규 개입보다 기존 조치의 유지, 모니터링, 재상승 신호 점검에 초점을 둔다.",
+        use: "위험도 하락과 함께 외식·숙박 비중, 방문집중도, 개폐업 회전율이 같이 낮아졌는지 확인한다."
+      },
+      "trend-exposure": {
+        group: "최근 위험도 추세 유형",
+        title: "관광노출 관리형",
+        summary: "관광·방문 관련 압력은 비교적 높지만 거주취약은 낮게 나타나는 상태다.",
+        meaning: "현재는 주민 이탈 위험보다 생활환경 악화나 향후 업종 전환 가능성을 관리해야 하는 단계다.",
+        policy: "방문 동선, 소음, 쓰레기, 야간 안전 등 생활환경 관리 수단을 우선 검토하고, 거주취약 상승 여부를 추적한다.",
+        use: "관광소비압력과 방문압력은 높지만 거주취약 점수가 낮은지, 이후 분기에 거주취약이 상승하는지 확인한다."
+      },
+      "trend-monitoring": {
+        group: "최근 위험도 추세 유형",
+        title: "모니터링형",
+        summary: "최근 위험도 변화가 크지 않거나 뚜렷한 상승·하락 방향이 없는 상태다.",
+        meaning: "즉각적인 정책 개입보다 지표 변화를 꾸준히 관찰하면서 급격한 전환을 포착하는 것이 적절하다.",
+        policy: "기본 패키지를 적용하고, 특정 지표가 급등하거나 등급이 상승하면 구조 유형과 정책 패키지를 다시 판단한다.",
+        use: "분기별 위험도, 업종구성 전환도, 개폐업 회전율, 점포수 변화율을 정기적으로 확인한다."
+      }
+    };
     let activePreset = "reset";
     let activeScenarioNote = "";
     let selectedCode = String(marketList()[0].상권_코드);
@@ -1832,6 +2814,14 @@
     }
     function fmtTopShareText(v) { return `상위 ${fmtTopShare(v)}`; }
     function fmtDelta(v) { return `${Number(v) > 0 ? "+" : ""}${Number(v)}%p`; }
+    function fmtQuarter(value) {
+      const text = String(value ?? "");
+      const compact = text.match(/^(\d{4})([1-4])$/);
+      if (compact) return `${compact[1]}Q${compact[2]}`;
+      const readable = text.match(/^(\d{4})\s*Q\s*([1-4])$/i);
+      if (readable) return `${readable[1]}Q${readable[2]}`;
+      return text;
+    }
     function fmtSignedPct(v) {
       const value = Number(v ?? 0) * 100;
       return `${value > 0 ? "+" : ""}${value.toFixed(1)}%`;
@@ -2038,6 +3028,352 @@
       return parts.length ? parts.join(", ") : "변화 없음";
     }
 
+    function recentScenarioRows(m) {
+      const f = modeFields();
+      const rows = (trendByCode.get(String(m.상권_코드)) || [])
+        .filter(row => Number.isFinite(Number(row[f.risk])));
+      return rows.slice(-3);
+    }
+
+    function scenarioTrajectoryInfo(m) {
+      const f = modeFields();
+      const rows = recentScenarioRows(m);
+      const fallback = [{
+        기준_년분기_코드: DATA.latestQuarter,
+        [f.risk]: Number(m[f.risk] || 0),
+        [f.grade]: m[f.grade],
+        [f.pressure]: Number(m[f.pressure] || 0),
+        거주취약_백분위: Number(m.거주취약_백분위 || 0)
+      }];
+      const work = rows.length ? rows : fallback;
+      const first = work[0];
+      const latest = work[work.length - 1];
+      const firstRisk = Number(first[f.risk] || 0);
+      const latestRisk = Number(latest[f.risk] || 0);
+      const firstGrade = first[f.grade] || gradeByRisk(firstRisk);
+      const latestGrade = latest[f.grade] || gradeByRisk(latestRisk);
+      const firstLevel = gradeOrder[firstGrade] ?? 0;
+      const latestLevel = gradeOrder[latestGrade] ?? 0;
+      const delta = latestRisk - firstRisk;
+      const highCount = work.filter(row => (gradeOrder[row[f.grade] || gradeByRisk(row[f.risk])] ?? 0) >= 2).length;
+      const tourism = Number(m[f.tourism] || 0);
+      const visit = Number(m[f.visit] || 0);
+      const resident = Number(m.거주취약_백분위 || 0);
+      const quarterText = work.map(row => fmtQuarter(row.기준_년분기_코드 || row.기준_년분기)).join(" → ");
+      const moveText = `${delta >= 0 ? "+" : ""}${fmt1(delta)}점`;
+      if (latestLevel >= 2 && (delta >= 3 || latestLevel > firstLevel)) {
+        return {
+          rows: work,
+          key: "rising",
+          label: "위험 상승형",
+          delta,
+          text: `최근 ${quarterText} 기준 위험도가 ${fmt1(firstRisk)}점에서 ${fmt1(latestRisk)}점으로 ${moveText} 변했다. 등급 또는 점수가 상승해 선제 대응 검토가 필요한 흐름이다.`
+        };
+      }
+      if (latestLevel >= 2 && highCount === work.length) {
+        return {
+          rows: work,
+          key: "persistent",
+          label: "고위험 고착형",
+          delta,
+          text: `최근 ${quarterText} 동안 위험·경계권에 머물렀다. 단기 변동보다 구조적 압력과 거주취약이 함께 유지되는 상권으로 해석할 수 있다.`
+        };
+      }
+      if (latestLevel < firstLevel || delta <= -3) {
+        return {
+          rows: work,
+          key: "easing",
+          label: "위험 완화형",
+          delta,
+          text: `최근 ${quarterText} 기준 위험도가 ${fmt1(firstRisk)}점에서 ${fmt1(latestRisk)}점으로 ${moveText} 변했다. 위험은 완화됐지만 재상승 여부를 계속 확인할 필요가 있다.`
+        };
+      }
+      if ((tourism >= 0.55 || visit >= 0.65) && resident < 0.35) {
+        return {
+          rows: work,
+          key: "exposure",
+          label: "관광노출 관리형",
+          delta,
+          text: `관광·방문 관련 압력은 비교적 높지만 현재 거주취약은 낮게 나타난다. 주민 이탈 위험보다 생활환경 관리와 전환 신호 감시가 우선인 상권이다.`
+        };
+      }
+      return {
+        rows: work,
+        key: "monitoring",
+        label: "모니터링형",
+        delta,
+        text: `최근 ${quarterText} 기준 위험도 변화는 ${moveText} 수준이다. 급격한 등급 전환보다는 지표 변동을 누적 관찰하는 방식이 적절하다.`
+      };
+    }
+
+    function drawScenarioTrendChart(rows) {
+      const svg = document.getElementById("scenarioTrendSvg");
+      if (!svg) return;
+      const f = modeFields();
+      const width = svg.clientWidth || 560;
+      const height = svg.clientHeight || 150;
+      const pad = { left: 36, right: 18, top: 18, bottom: 30 };
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.innerHTML = "";
+      [0, 25, 50, 75, 100].forEach(tick => {
+        const y = height - pad.bottom - (tick / 100) * (height - pad.top - pad.bottom);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", pad.left);
+        line.setAttribute("x2", width - pad.right);
+        line.setAttribute("y1", y);
+        line.setAttribute("y2", y);
+        line.setAttribute("stroke", "#e6ebf0");
+        svg.appendChild(line);
+        const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        label.setAttribute("x", pad.left - 10);
+        label.setAttribute("y", y + 4);
+        label.setAttribute("text-anchor", "end");
+        label.setAttribute("class", "axis-label");
+        label.textContent = tick;
+        svg.appendChild(label);
+      });
+      const points = rows.map((row, index) => {
+        const x = rows.length === 1
+          ? (pad.left + width - pad.right) / 2
+          : pad.left + (index / (rows.length - 1)) * (width - pad.left - pad.right);
+        const risk = Math.max(0, Math.min(100, Number(row[f.risk] || 0)));
+        const y = height - pad.bottom - (risk / 100) * (height - pad.top - pad.bottom);
+        return { x, y, risk, row };
+      });
+      if (points.length) {
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", points.map((p, index) => `${index ? "L" : "M"}${p.x},${p.y}`).join(""));
+        path.setAttribute("fill", "none");
+        path.setAttribute("stroke", "#6aaef5");
+        path.setAttribute("stroke-width", "3");
+        path.setAttribute("stroke-linecap", "round");
+        svg.appendChild(path);
+      }
+      points.forEach(point => {
+        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute("cx", point.x);
+        circle.setAttribute("cy", point.y);
+        circle.setAttribute("r", "5");
+        circle.setAttribute("fill", markerColor(point.row[f.grade] || gradeByRisk(point.risk)));
+        circle.setAttribute("stroke", "#ffffff");
+        circle.setAttribute("stroke-width", "2");
+        svg.appendChild(circle);
+        const quarter = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        quarter.setAttribute("x", point.x);
+        quarter.setAttribute("y", height - 9);
+        quarter.setAttribute("text-anchor", "middle");
+        quarter.setAttribute("class", "axis-label");
+        quarter.textContent = fmtQuarter(point.row.기준_년분기_코드 || point.row.기준_년분기);
+        svg.appendChild(quarter);
+        const value = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        value.setAttribute("x", point.x);
+        value.setAttribute("y", Math.max(16, point.y - 10));
+        value.setAttribute("text-anchor", "middle");
+        value.setAttribute("class", "axis-label");
+        value.textContent = fmt1(point.risk);
+        svg.appendChild(value);
+      });
+    }
+
+    function policyPackageForMarket(m, trajectory) {
+      const f = modeFields();
+      const type = marketTourismType(m);
+      const tourism = Number(m[f.tourism] || 0);
+      const visit = Number(m[f.visit] || 0);
+      const resident = Number(m.거주취약_백분위 || 0);
+      const isTypeA = type.label.includes("유형 A");
+      const isTypeB = type.label.includes("유형 B");
+      const aTransitionSignal = tourism >= 0.52 && resident >= 0.65;
+      if (isTypeB) {
+        const transitionNote = aTransitionSignal
+          ? " 다만 관광소비압력과 거주취약이 동시에 높아 A유형 전환 신호는 별도로 감시한다."
+          : "";
+        return {
+          title: "B 패키지 · 방문 급증 관리",
+          summary: `방문 압력은 크지만 업종 전환이 아직 확정적으로 굳어진 단계는 아니다. 방문객 총량 규제보다 혼잡 관리와 A유형 전환 신호 감시가 우선이다.${transitionNote}`,
+          targets: ["방문집중도", "유동인구 증가율", "외식·숙박 비중의 상승 전환", "개폐업 회전율"],
+          actions: ["보행 동선 분산과 안내체계 정비", "쓰레기·소음·야간안전 관리", "A유형 전환 신호 확인 시 A 패키지 별도 검토", "단기 이벤트 집중구간 모니터링"],
+          vals: { visit: -12, flow: -10, fnbGrowth: -5, turnover: -4 }
+        };
+      }
+      if (isTypeA || aTransitionSignal) {
+        return {
+          title: "A 패키지 · 업종 관광화 대응",
+          summary: "외식·숙박 중심의 상권 전환과 거주취약이 함께 나타나는 상권이다. 치환 채널이 이미 작동 중인 것으로 보고 직접 대응 수단을 우선 검토한다.",
+          targets: ["외식업 비중과 외식업 증가율", "숙박업 비중", "프랜차이즈 비율", "업종구성 전환도와 개폐업 회전율"],
+          actions: ["장기안심상가 및 상생협약", "앵커시설 매입·임대", "생활밀착업종 보호구역 검토", "상가임대차 분쟁조정 연계"],
+          vals: { lodging: -6, fnb: -8, fnbGrowth: -12, franchise: -8, turnover: -6, mix: -7 }
+        };
+      }
+      if (trajectory.key === "rising" || visit >= 0.65) {
+        return {
+          title: "B 패키지 · 방문 급증 관리",
+          summary: "방문 압력은 크지만 업종 전환이 아직 확정적으로 굳어진 단계는 아니다. 방문객 총량 규제보다 혼잡 관리와 A유형 전환 신호 감시가 우선이다.",
+          targets: ["방문집중도", "유동인구 증가율", "외식·숙박 비중의 상승 전환", "개폐업 회전율"],
+          actions: ["보행 동선 분산과 안내체계 정비", "쓰레기·소음·야간안전 관리", "전환 신호 발생 시 A 패키지 발동", "단기 이벤트 집중구간 모니터링"],
+          vals: { visit: -12, flow: -10, fnbGrowth: -5, turnover: -4 }
+        };
+      }
+      if (trajectory.key === "exposure" || ((tourism >= 0.50 || visit >= 0.55) && resident < 0.35)) {
+        return {
+          title: "C 패키지 · 생활환경 보호 모니터링",
+          summary: "관광 노출은 있으나 거주취약이 낮은 상권이다. 주민 이탈 대응보다 생활환경 악화와 업종 전환 신호를 먼저 관리한다.",
+          targets: ["방문집중도와 유동인구 증가율", "야간·주말 혼잡 관련 지표", "외식·숙박 비중 상승 전환", "개폐업 회전율"],
+          actions: ["주거지 인접 동선 분산", "정온구역·생활환경 관리", "혼잡 민원 및 단기 체류 압력 점검", "A/B 유형 전환 여부 분기별 확인"],
+          vals: { visit: -8, flow: -6, turnover: -3 }
+        };
+      }
+      return {
+        title: "기본 패키지 · 상권 변화 모니터링",
+        summary: "현재는 뚜렷한 고위험 구조보다 변동 관찰이 필요한 상권이다. 급격한 전환을 조기 포착하는 낮은 강도의 모니터링을 적용한다.",
+        targets: ["업종구성 전환도", "개폐업 회전율", "외식업 증가율", "점포수 변화율"],
+        actions: ["분기별 지표 점검", "생활밀착업종 감소 여부 확인", "위험 등급 상승 시 유형 재분류", "현장조사 후보군으로 보류"],
+        vals: { fnbGrowth: -4, turnover: -4, mix: -4 }
+      };
+    }
+
+    function scaleScenarioValues(vals, factor) {
+      const output = blankScenarioValues();
+      Object.entries(vals || {}).forEach(([key, value]) => {
+        output[key] = Math.max(-25, Math.min(25, Math.round(Number(value || 0) * factor)));
+      });
+      return output;
+    }
+
+    function renderPolicyList(id, items) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.innerHTML = (items || []).map(item => `<li>${escapeHtml(item)}</li>`).join("");
+    }
+
+    function renderPolicyActions(id, items) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.innerHTML = (items || []).map(item => `
+        <li>
+          <button class="policy-action-button" type="button" data-policy-action="${escapeHtml(item)}" aria-haspopup="dialog">
+            ${escapeHtml(item)}
+          </button>
+        </li>`).join("");
+      el.querySelectorAll("[data-policy-action]").forEach(btn => {
+        btn.addEventListener("click", () => openPolicyModal(btn.dataset.policyAction));
+      });
+    }
+
+    function openInfoModal(config) {
+      document.getElementById("policyModalKicker").textContent = config.kicker || "세부 정보";
+      document.getElementById("policyModalTitle").textContent = config.title || "";
+      document.getElementById("policyModalSummary").textContent = config.summary || "";
+      document.getElementById("policyModalPurposeLabel").textContent = config.firstLabel || "의미";
+      document.getElementById("policyModalOperationLabel").textContent = config.secondLabel || "정책적으로 보는 방식";
+      document.getElementById("policyModalIndicatorsLabel").textContent = config.thirdLabel || "대시보드 활용";
+      document.getElementById("policyModalPurpose").textContent = config.firstText || "";
+      document.getElementById("policyModalOperation").textContent = config.secondText || "";
+      document.getElementById("policyModalIndicators").textContent = config.thirdText || "";
+      document.getElementById("policyModalBackdrop").hidden = false;
+      document.getElementById("policyModal").hidden = false;
+      document.body.classList.add("modal-open");
+      const closeBtn = document.getElementById("policyModalClose");
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function openPolicyModal(title) {
+      const detail = policyDetails[title] || {
+        summary: "선택한 검토 수단의 세부 적용 방식은 현장 여건과 관련 제도를 함께 확인해 결정한다.",
+        purpose: "위험도 산식에서 포착된 압력과 실제 현장 문제를 연결해 정책 우선순위를 검토한다.",
+        operation: "담당 부서가 현장조사, 민원, 관련 조례·제도 적용 가능성을 확인한 뒤 세부 실행안을 정한다.",
+        indicators: "위험도, 관련 압력 지표, 민원, 현장조사 결과"
+      };
+      openInfoModal({
+        kicker: "정책 검토 수단",
+        title,
+        summary: detail.summary,
+        firstLabel: "적용 목적",
+        secondLabel: "운용 방식",
+        thirdLabel: "확인 지표",
+        firstText: detail.purpose,
+        secondText: detail.operation,
+        thirdText: detail.indicators
+      });
+    }
+
+    function openTypeMeaningModal(key) {
+      const detail = typeMeaningDetails[key];
+      if (!detail) return;
+      openInfoModal({
+        kicker: detail.group,
+        title: detail.title,
+        summary: detail.summary,
+        firstLabel: "의미",
+        secondLabel: "정책적으로 보는 방식",
+        thirdLabel: "대시보드 활용",
+        firstText: detail.meaning,
+        secondText: detail.policy,
+        thirdText: detail.use
+      });
+    }
+
+    function closePolicyModal() {
+      const modal = document.getElementById("policyModal");
+      const backdrop = document.getElementById("policyModalBackdrop");
+      if (modal) modal.hidden = true;
+      if (backdrop) backdrop.hidden = true;
+      document.body.classList.remove("modal-open");
+    }
+
+    function initPolicyModal() {
+      const closeBtn = document.getElementById("policyModalClose");
+      const backdrop = document.getElementById("policyModalBackdrop");
+      if (closeBtn) closeBtn.addEventListener("click", closePolicyModal);
+      if (backdrop) backdrop.addEventListener("click", closePolicyModal);
+      document.querySelectorAll("[data-type-detail]").forEach(btn => {
+        btn.addEventListener("click", () => openTypeMeaningModal(btn.dataset.typeDetail));
+      });
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") closePolicyModal();
+      });
+    }
+
+    function updateScenarioPolicyPanels(m) {
+      const f = modeFields();
+      const trajectory = scenarioTrajectoryInfo(m);
+      const rows = trajectory.rows;
+      const policy = policyPackageForMarket(m, trajectory);
+      const type = marketTourismType(m);
+      const trendCards = document.getElementById("scenarioTrendCards");
+      if (trendCards) {
+        trendCards.innerHTML = rows.map(row => {
+          const risk = Number(row[f.risk] || 0);
+          const grade = row[f.grade] || gradeByRisk(risk);
+          return `
+            <article class="scenario-quarter-card">
+              <span>${escapeHtml(fmtQuarter(row.기준_년분기_코드 || row.기준_년분기))}</span>
+              <strong>${fmt1(risk)}점</strong>
+              <span class="grade g-${grade}">${grade}</span>
+              <small>최종압력 ${fmtPct(row[f.pressure])} · 거주취약 ${fmtPct(row.거주취약_백분위)}</small>
+            </article>`;
+        }).join("");
+      }
+      drawScenarioTrendChart(rows);
+      document.getElementById("scenarioTrajectoryLabel").textContent = trajectory.label;
+      document.getElementById("scenarioTrajectoryText").textContent = trajectory.text;
+      document.getElementById("policyPackageTitle").textContent = policy.title;
+      document.getElementById("policyPackageSummary").textContent = policy.summary;
+      document.getElementById("scenarioTypeBadge").innerHTML = `
+        <span class="type-badge ${type.className}" title="${escapeHtml(type.description)}">${escapeHtml(type.label)}</span>
+        <span class="policy-pill">${escapeHtml(trajectory.label)}</span>`;
+      renderPolicyList("policyPackageTargets", policy.targets);
+      renderPolicyActions("policyPackageActions", policy.actions);
+      document.getElementById("policyAssumptionText").textContent =
+        `권장 패키지 적용 가정: ${scenarioDeltaText(scaleScenarioValues(policy.vals, 1))}`;
+    }
+
+    function policyScenarioHint(m) {
+      const trajectory = scenarioTrajectoryInfo(m);
+      const policy = policyPackageForMarket(m, trajectory);
+      return `${policy.title}을 우선 검토할 수 있다. 권장 또는 강화 패키지 버튼을 누르면 해당 패키지가 겨냥하는 지표 조정 가정이 적용된다.`;
+    }
+
     function findGradeShiftScenario(m, weights, direction) {
       const sign = direction === "down" ? -1 : 1;
       const baseRisk = simulatedRisk(m, {}, weights);
@@ -2151,9 +3487,17 @@
         updateSimulation();
         return;
       }
-      const result = findGradeShiftScenario(selected(), modeWeights(), kind);
-      setScenarioValues(result.vals || blankScenarioValues());
-      activeScenarioNote = result.note || "";
+      const m = selected();
+      const weights = modeWeights();
+      const policy = policyPackageForMarket(m, scenarioTrajectoryInfo(m));
+      const factor = kind === "strong" ? 1.5 : 1;
+      const vals = scaleScenarioValues(policy.vals, factor);
+      const beforeRisk = simulatedRisk(m, {}, weights);
+      const afterRisk = simulatedRisk(m, vals, weights);
+      const beforeGrade = gradeByRisk(beforeRisk);
+      const afterGrade = gradeByRisk(afterRisk);
+      setScenarioValues(vals);
+      activeScenarioNote = `${kind === "strong" ? "강화" : "권장"} ${policy.title} 가정: ${scenarioDeltaText(vals)}. 산식상 위험도는 ${fmt1(beforeRisk)}점에서 ${fmt1(afterRisk)}점으로 ${afterRisk >= beforeRisk ? "+" : ""}${fmt1(afterRisk - beforeRisk)}점 변하고, 등급은 ${beforeGrade}에서 ${afterGrade}로 계산된다.`;
       activePreset = kind;
       updatePresetButtons();
       updateSimulation();
@@ -2180,7 +3524,8 @@
       });
       document.getElementById("marketSelect").addEventListener("change", event => {
         selectedCode = String(event.target.value);
-        activePreset = "custom";
+        setScenarioValues(blankScenarioValues());
+        activePreset = "reset";
         activeScenarioNote = "";
         updatePresetButtons();
         updateAll();
@@ -2201,6 +3546,7 @@
       document.querySelectorAll("[data-scenario-preset]").forEach(btn => {
         btn.addEventListener("click", () => applyScenarioPreset(btn.dataset.scenarioPreset));
       });
+      initPolicyModal();
       updatePresetButtons();
     }
 
@@ -3390,6 +4736,7 @@
       const m = selected();
       const f = modeFields();
       const weights = modeWeights();
+      updateScenarioPolicyPanels(m);
       const vals = {
         lodging: Number(document.getElementById("lodgingDelta").value),
         fnb: Number(document.getElementById("fnbDelta").value),
@@ -3420,7 +4767,7 @@
       document.getElementById("simBeforeGrade").innerHTML = `<span class="grade g-${beforeGrade}">${beforeGrade}</span>`;
       document.getElementById("simAfterGrade").innerHTML = `<span class="grade g-${afterGrade}">${afterGrade}</span>`;
       const diff = afterRisk - Number(m[f.risk] || 0);
-      const scenarioText = activeScenarioNote || mitigationHint(m, weights, beforeGrade);
+      const scenarioText = activeScenarioNote || policyScenarioHint(m);
       document.getElementById("simHint").textContent =
         `현재 설정 변화: ${diff >= 0 ? "+" : ""}${fmt1(diff)}점. ${scenarioText}`;
     }
