@@ -736,6 +736,14 @@
       gap: 14px;
       align-items: start;
     }
+    .scenario-intro {
+      margin: -2px 0 14px;
+      max-width: 820px;
+      color: #313946;
+      font-size: 15px;
+      font-weight: 750;
+      line-height: 1.65;
+    }
     .scenario-alert {
       display: grid;
       gap: 6px;
@@ -1885,6 +1893,12 @@
       color: #565656;
       font-weight: 650;
     }
+    .scenario-intro {
+      color: #565656;
+      font-size: 16px;
+      line-height: 1.75;
+      margin: -4px 0 18px;
+    }
     .scenario-note,
     .hint {
       border-left-color: #3860BE;
@@ -2245,7 +2259,7 @@
               <div class="story-map-head">
                 <div>
                   <h2>상위 위험상권 위성지도</h2>
-                  <p class="muted">2026Q1 기준 위험도 상위 5개 상권을 위성지도 위에서 비교한다.</p>
+                  <p class="muted">2026년 1분기 기준 위험도 상위 5개 상권을 위성지도에서 비교합니다.</p>
                 </div>
                 <div id="topRiskMapCaption" class="story-map-caption"></div>
               </div>
@@ -2288,7 +2302,7 @@
           <div class="variable-toolbar">
             <div>
               <h2>변수별 시각화</h2>
-              <p class="muted">관광상권 38개를 같은 지도 위에 겹쳐 각 변수의 상대적 분포를 비교한다. 세부 변수는 진할수록 해당 변수의 서울시 백분위가 높다.</p>
+              <p class="muted">분석 대상 38개 관광상권을 동일한 지도에 표시하여 각 변수의 상대적 분포를 비교합니다. 색이 진할수록 해당 변수의 서울시 전체 상권 내 백분위가 높음을 의미합니다.</p>
             </div>
             <label>상세 변수
               <select id="variableSelect"></select>
@@ -2296,7 +2310,7 @@
           </div>
           <div class="scenario-alert" role="note" aria-label="변수 시각화 참고">
             <strong>참고</strong>
-            <span>원하는 변수의 시각화 카드를 클릭하면 페이지 하단에서 변수별 시각화 모습을 확대해서 볼 수 있다.</span>
+            <span>확인하려는 변수 카드를 선택하면 페이지 하단의 확대 지도에서 해당 변수의 분포를 자세히 확인할 수 있습니다.</span>
           </div>
           <div id="variableGrid" class="variable-grid"></div>
         </section>
@@ -2328,11 +2342,12 @@
           <section class="panel">
             <div class="panel-head">
               <h2>정책 패키지 검토</h2>
-              <span class="muted">최근 3분기 + 정책 가정</span>
+              <span class="muted">최근 3분기 변화 및 정책 가정</span>
             </div>
+            <p class="scenario-intro">상권의 위험 특성에 따라 검토 가능한 정책 패키지를 제시하고, 해당 정책이 목표로 하는 지표가 개선된다고 가정했을 때 투어리스티피케이션 위험도가 어떻게 변화하는지 확인합니다.</p>
             <div class="scenario-alert" role="note" aria-label="시나리오 분석 해석 주의">
-              <strong>해석 주의: 정책효과 추정 아님</strong>
-              <span>이 기능은 정책 패키지가 겨냥하는 지표가 개선된다는 가정하에서 산식상 위험도가 어떻게 달라지는지 확인하는 시나리오 민감도 분석이며, 특정 정책의 인과효과를 추정하지 않는다.</span>
+              <strong>해석 시 유의사항</strong>
+              <span>본 분석은 정책 시행에 따른 실제 효과를 추정하는 것이 아니라, 정책 목표 지표의 변화가 위험도 산식에 미치는 영향을 살펴보는 시나리오 분석입니다.</span>
             </div>
             <div id="scenarioTrendCards" class="scenario-trend-grid" aria-label="최근 3분기 위험도"></div>
             <svg id="scenarioTrendSvg" class="scenario-trend-svg" role="img" aria-label="최근 3분기 위험도 변화"></svg>
@@ -2365,7 +2380,7 @@
               <button class="preset-button" type="button" data-scenario-preset="strong">강화 패키지 적용</button>
               <button class="preset-button is-active" type="button" data-scenario-preset="reset">초기화 0%p</button>
             </div>
-            <p class="scenario-control-title">정책 목표 지표 조정</p>
+            <p class="scenario-control-title">정책 목표 지표 변화 가정</p>
             <div class="sliders">
               <label>숙박업 <span id="lodgingText">0%p</span><input id="lodgingDelta" type="range" min="-25" max="25" value="0" step="1"></label>
               <label>외식업 비중 <span id="fnbText">0%p</span><input id="fnbDelta" type="range" min="-25" max="25" value="0" step="1"></label>
@@ -2397,20 +2412,20 @@
                 <h2>유형의 의미</h2>
                 <span class="muted">클릭해서 확인</span>
               </div>
-              <p class="type-guide-copy">상권 유형, 정책 패키지, 최근 위험도 흐름을 구분해 해석한다.</p>
+              <p class="type-guide-copy">상권 구조 유형, 정책 패키지, 최근 위험도 흐름을 구분하여 해석합니다.</p>
               <div class="type-guide-group">
                 <strong>상권 구조 유형</strong>
                 <div class="type-guide-actions">
-                  <button class="type-guide-button" type="button" data-type-detail="structure-a" aria-haspopup="dialog"><b>유형 A · 업종 관광화형</b><span>외식·숙박 전환이 이미 활성인 상권</span></button>
-                  <button class="type-guide-button" type="button" data-type-detail="structure-b" aria-haspopup="dialog"><b>유형 B · 방문 급증형</b><span>방문은 몰리지만 업종 전환은 초기인 상권</span></button>
-                  <button class="type-guide-button" type="button" data-type-detail="structure-unclassified" aria-haspopup="dialog"><b>유형 미분류</b><span>A/B 구조가 뚜렷하지 않은 상권</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="structure-a" aria-haspopup="dialog"><b>유형 A · 업종 관광화형</b><span>외식·숙박 등 방문객 지향 업종 관련 지표가 상대적으로 높은 상권</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="structure-b" aria-haspopup="dialog"><b>유형 B · 방문 집중형</b><span>방문 관련 지표는 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="structure-unclassified" aria-haspopup="dialog"><b>유형 미분류</b><span>두 유형 중 어느 한쪽의 특성이 뚜렷하지 않은 상권</span></button>
                 </div>
               </div>
               <div class="type-guide-group">
                 <strong>정책 패키징 유형</strong>
                 <div class="type-guide-actions">
                   <button class="type-guide-button" type="button" data-type-detail="package-a" aria-haspopup="dialog"><b>A 패키지</b><span>업종 관광화 대응</span></button>
-                  <button class="type-guide-button" type="button" data-type-detail="package-b" aria-haspopup="dialog"><b>B 패키지</b><span>방문 급증 관리</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="package-b" aria-haspopup="dialog"><b>B 패키지</b><span>방문 집중 관리</span></button>
                   <button class="type-guide-button" type="button" data-type-detail="package-c" aria-haspopup="dialog"><b>C 패키지</b><span>생활환경 보호 모니터링</span></button>
                   <button class="type-guide-button" type="button" data-type-detail="package-basic" aria-haspopup="dialog"><b>기본 패키지</b><span>상권 변화 모니터링</span></button>
                 </div>
@@ -2418,11 +2433,11 @@
               <div class="type-guide-group">
                 <strong>최근 위험도 추세 유형</strong>
                 <div class="type-guide-actions">
-                  <button class="type-guide-button" type="button" data-type-detail="trend-rising" aria-haspopup="dialog"><b>위험 상승형</b><span>최근 위험도가 상승하는 흐름</span></button>
-                  <button class="type-guide-button" type="button" data-type-detail="trend-persistent" aria-haspopup="dialog"><b>고위험 고착형</b><span>위험·경계권이 지속되는 흐름</span></button>
-                  <button class="type-guide-button" type="button" data-type-detail="trend-easing" aria-haspopup="dialog"><b>위험 완화형</b><span>최근 위험도가 낮아지는 흐름</span></button>
-                  <button class="type-guide-button" type="button" data-type-detail="trend-exposure" aria-haspopup="dialog"><b>관광노출 관리형</b><span>관광 노출은 있으나 거주취약은 낮은 상태</span></button>
-                  <button class="type-guide-button" type="button" data-type-detail="trend-monitoring" aria-haspopup="dialog"><b>모니터링형</b><span>뚜렷한 급변 없이 관찰이 필요한 상태</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="trend-rising" aria-haspopup="dialog"><b>위험 상승형</b><span>최근 3분기 위험도 지표가 상승한 상권</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="trend-persistent" aria-haspopup="dialog"><b>고위험 지속형</b><span>위험·경계권에 지속적으로 위치한 상권</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="trend-easing" aria-haspopup="dialog"><b>위험 완화형</b><span>최근 3분기 위험도 지표가 낮아진 상권</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="trend-exposure" aria-haspopup="dialog"><b>관광노출 관리형</b><span>관광·방문 지표는 높지만 거주취약 지표는 낮은 상권</span></button>
+                  <button class="type-guide-button" type="button" data-type-detail="trend-monitoring" aria-haspopup="dialog"><b>모니터링형</b><span>뚜렷한 변화 방향이 관찰되지 않는 상권</span></button>
                 </div>
               </div>
             </section>
@@ -2565,124 +2580,124 @@
     ];
     const gradeOrder = { "정상": 0, "주의": 1, "경계": 2, "위험": 3 };
     const marketTypeByCode = {
-      "3120022": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "치환 채널(외식·숙박 전환)이 이미 활성인 상권" },
-      "3120031": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "치환 채널(외식·숙박 전환)이 이미 활성인 상권" },
-      "3120012": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "치환 채널(외식·숙박 전환)이 이미 활성인 상권" },
-      "3120007": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "치환 채널(외식·숙박 전환)이 이미 활성인 상권" },
-      "3111013": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "치환 채널(외식·숙박 전환)이 이미 활성인 상권" },
-      "3120046": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "치환 채널(외식·숙박 전환)이 이미 활성인 상권" },
-      "3001491": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "치환 채널(외식·숙박 전환)이 이미 활성인 상권" },
-      "3120008": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "치환 채널(외식·숙박 전환)이 이미 활성인 상권" },
-      "3110080": { label: "유형 B · 방문 급증형", className: "is-visit", description: "방문은 몰리지만 업종 전환은 아직 초기인 상권" },
-      "3110084": { label: "유형 B · 방문 급증형", className: "is-visit", description: "방문은 몰리지만 업종 전환은 아직 초기인 상권" },
-      "3120104": { label: "유형 B · 방문 급증형", className: "is-visit", description: "방문은 몰리지만 업종 전환은 아직 초기인 상권" },
-      "3120103": { label: "유형 B · 방문 급증형", className: "is-visit", description: "방문은 몰리지만 업종 전환은 아직 초기인 상권" },
-      "3110085": { label: "유형 B · 방문 급증형", className: "is-visit", description: "방문은 몰리지만 업종 전환은 아직 초기인 상권" },
-      "3120102": { label: "유형 B · 방문 급증형", className: "is-visit", description: "방문은 몰리지만 업종 전환은 아직 초기인 상권", hybrid: true },
-      "3110131": { label: "유형 B · 방문 급증형", className: "is-visit", description: "방문은 몰리지만 업종 전환은 아직 초기인 상권" },
-      "3120105": { label: "유형 B · 방문 급증형", className: "is-visit", description: "방문은 몰리지만 업종 전환은 아직 초기인 상권", hybrid: true }
+      "3120022": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "외식·숙박 등 방문객 지향 업종 관련 지표가 상대적으로 높은 상권" },
+      "3120031": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "외식·숙박 등 방문객 지향 업종 관련 지표가 상대적으로 높은 상권" },
+      "3120012": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "외식·숙박 등 방문객 지향 업종 관련 지표가 상대적으로 높은 상권" },
+      "3120007": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "외식·숙박 등 방문객 지향 업종 관련 지표가 상대적으로 높은 상권" },
+      "3111013": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "외식·숙박 등 방문객 지향 업종 관련 지표가 상대적으로 높은 상권" },
+      "3120046": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "외식·숙박 등 방문객 지향 업종 관련 지표가 상대적으로 높은 상권" },
+      "3001491": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "외식·숙박 등 방문객 지향 업종 관련 지표가 상대적으로 높은 상권" },
+      "3120008": { label: "유형 A · 업종 관광화형", className: "is-industry", description: "외식·숙박 등 방문객 지향 업종 관련 지표가 상대적으로 높은 상권" },
+      "3110080": { label: "유형 B · 방문 집중형", className: "is-visit", description: "방문 관련 지표는 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권" },
+      "3110084": { label: "유형 B · 방문 집중형", className: "is-visit", description: "방문 관련 지표는 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권" },
+      "3120104": { label: "유형 B · 방문 집중형", className: "is-visit", description: "방문 관련 지표는 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권" },
+      "3120103": { label: "유형 B · 방문 집중형", className: "is-visit", description: "방문 관련 지표는 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권" },
+      "3110085": { label: "유형 B · 방문 집중형", className: "is-visit", description: "방문 관련 지표는 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권" },
+      "3120102": { label: "유형 B · 방문 집중형", className: "is-visit", description: "방문 관련 지표는 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권", hybrid: true },
+      "3110131": { label: "유형 B · 방문 집중형", className: "is-visit", description: "방문 관련 지표는 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권" },
+      "3120105": { label: "유형 B · 방문 집중형", className: "is-visit", description: "방문 관련 지표는 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권", hybrid: true }
     };
     const policyDetails = {
       "장기안심상가 및 상생협약": {
-        summary: "임대료 급등과 임차인 교체가 업종 관광화로 이어지는 것을 늦추기 위한 상생형 임대 안정 장치다.",
-        purpose: "외식·숙박·프랜차이즈 비중이 높은 상권에서 생활밀착업종과 기존 점포의 이탈 위험을 낮춘다.",
-        operation: "임대인·임차인·자치구가 임대료 인상 억제, 계약 갱신 협력, 상생협약 이행 조건을 정하고 우수 협약 상가에는 행정·홍보·시설개선 지원을 연계한다.",
+        summary: "임대료 급등과 임차인 교체가 업종 관광화로 이어지는 것을 늦추기 위한 상생형 임대 안정 장치입니다.",
+        purpose: "외식·숙박·프랜차이즈 비중이 높은 상권에서 생활밀착업종과 기존 점포의 이탈 위험을 낮춥니다.",
+        operation: "임대인·임차인·자치구가 임대료 인상 억제, 계약 갱신 협력, 상생협약 이행 조건을 정하고 우수 협약 상가에는 행정·홍보·시설개선 지원을 연계합니다.",
         indicators: "외식업 비중, 숙박업 비중, 프랜차이즈 비율, 개폐업 회전율, 거주취약 점수"
       },
       "앵커시설 매입·임대": {
-        summary: "공공이 핵심 입지를 확보해 주민 생활에 필요한 점포나 지역 기반 시설을 장기적으로 유지하는 방식이다.",
-        purpose: "관광 소비 업종으로 빠르게 치환되는 구간에서 생활서비스 공백과 지역 정체성 약화를 완화한다.",
-        operation: "자치구 또는 공공기관이 빈 점포·핵심 상가를 매입하거나 장기 임차한 뒤, 생활밀착업종·지역상생 점포·공공 문화거점에 안정적으로 재임대한다.",
+        summary: "공공이 핵심 입지를 확보해 주민 생활에 필요한 점포나 지역 기반 시설을 장기적으로 유지하는 방식입니다.",
+        purpose: "관광 소비 업종으로 빠르게 치환되는 구간에서 생활서비스 공백과 지역 정체성 약화를 완화합니다.",
+        operation: "자치구 또는 공공기관이 빈 점포·핵심 상가를 매입하거나 장기 임차한 뒤, 생활밀착업종·지역상생 점포·공공 문화거점에 안정적으로 재임대합니다.",
         indicators: "생활밀착업종 감소 여부, 업종구성 전환도, 점포수 변화율, 임대료 상승 신호"
       },
       "생활밀착업종 보호구역 검토": {
-        summary: "주민 일상에 필요한 업종이 사라지는 구간을 별도로 관리해 관광업종 편중을 완화하는 검토 수단이다.",
-        purpose: "약국, 세탁, 마트, 의원, 문구, 철물 등 생활기반 업종의 급격한 감소를 조기에 막는다.",
-        operation: "상권 내 생활서비스 취약 구간을 지정 후보로 두고 신규 지원, 입점 유도, 용도·영업질서 관리 가능성, 공공임대 연계를 함께 검토한다.",
+        summary: "주민 일상에 필요한 업종이 사라지는 구간을 별도로 관리해 관광업종 편중을 완화하는 검토 수단입니다.",
+        purpose: "약국, 세탁, 마트, 의원, 문구, 철물 등 생활기반 업종의 급격한 감소를 조기에 막습니다.",
+        operation: "상권 내 생활서비스 취약 구간을 지정 후보로 두고 신규 지원, 입점 유도, 용도·영업질서 관리 가능성, 공공임대 연계를 함께 검토합니다.",
         indicators: "생활밀착업종 수 변화, 외식·숙박 비중, 업종구성 전환도, 거주취약 점수"
       },
       "상가임대차 분쟁조정 연계": {
-        summary: "임대료 인상, 계약 갱신 갈등, 권리금 분쟁 등으로 발생하는 기존 점포 이탈을 줄이는 지원 창구다.",
-        purpose: "개폐업 회전율이 높고 기존 임차인의 퇴출 압력이 커지는 상권에서 사후 피해를 낮춘다.",
-        operation: "분쟁 조정기관, 법률 상담, 임대차 보호제도 안내를 연결하고 반복 민원이 발생하는 구간은 현장조사 대상에 올린다.",
+        summary: "임대료 인상, 계약 갱신 갈등, 권리금 분쟁 등으로 발생하는 기존 점포 이탈을 줄이는 지원 창구입니다.",
+        purpose: "개폐업 회전율이 높고 기존 임차인의 퇴출 압력이 커지는 상권에서 사후 피해를 낮춥니다.",
+        operation: "분쟁 조정기관, 법률 상담, 임대차 보호제도 안내를 연결하고 반복 민원이 발생하는 구간은 현장조사 대상에 올립니다.",
         indicators: "개폐업 회전율, 점포수 변화율, 프랜차이즈 비율, 임대료 관련 민원"
       },
       "보행 동선 분산과 안내체계 정비": {
-        summary: "방문객을 한 골목이나 주거지 인접 구간에 몰리지 않게 유도하는 혼잡 완화 수단이다.",
-        purpose: "방문집중도와 유동인구 증가율이 높은 상권에서 생활공간 침범과 보행 혼잡을 줄인다.",
-        operation: "안내 표지, 추천 동선, 보행 방향, 대기 공간, 지하철·버스 접근 동선을 조정해 방문 흐름을 여러 구간으로 분산한다.",
+        summary: "방문객을 한 골목이나 주거지 인접 구간에 몰리지 않게 유도하는 혼잡 완화 수단입니다.",
+        purpose: "방문집중도와 유동인구 증가율이 높은 상권에서 생활공간 침범과 보행 혼잡을 줄입니다.",
+        operation: "안내 표지, 추천 동선, 보행 방향, 대기 공간, 지하철·버스 접근 동선을 조정해 방문 흐름을 여러 구간으로 분산합니다.",
         indicators: "방문집중도, 유동인구 증가율, 시간대별 혼잡, 보행 민원"
       },
       "쓰레기·소음·야간안전 관리": {
-        summary: "방문 급증이 주민 생활환경 악화로 번지는 것을 막는 현장 관리 패키지다.",
-        purpose: "관광객 총량을 직접 줄이기보다 주민이 체감하는 쓰레기, 소음, 야간 안전 문제를 낮춘다.",
-        operation: "집중 수거 시간 조정, 임시 분리수거 거점, 야간 순찰, 소음 계도, 영업장 주변 관리 협약을 결합한다.",
+        summary: "방문 집중이 주민 생활환경 악화로 이어지는 것을 막는 현장 관리 패키지입니다.",
+        purpose: "관광객 총량을 직접 줄이기보다 주민이 체감하는 쓰레기, 소음, 야간 안전 문제를 낮춥니다.",
+        operation: "집중 수거 시간 조정, 임시 분리수거 거점, 야간 순찰, 소음 계도, 영업장 주변 관리 협약을 결합합니다.",
         indicators: "야간 유동, 민원 건수, 쓰레기 배출량, 방문집중도"
       },
       "A유형 전환 신호 확인 시 A 패키지 별도 검토": {
-        summary: "방문 급증형 상권이 외식·숙박 중심의 업종 관광화형으로 넘어가는지 확인하는 조건부 대응이다.",
-        purpose: "방문 증가만으로 강한 규제를 적용하지 않고, 업종 치환 신호가 확인될 때 직접 개입으로 전환한다.",
-        operation: "외식·숙박 비중, 외식업 증가율, 업종구성 전환도, 생활밀착업종 감소가 동시에 나타나는지를 분기별로 점검한다.",
+        summary: "방문 집중형 상권에서 외식·숙박 중심의 업종 관광화 지표가 함께 높아지는지 확인하는 조건부 대응입니다.",
+        purpose: "방문 증가만으로 강한 규제를 적용하지 않고, 업종 치환 신호가 확인될 때 직접 개입으로 전환합니다.",
+        operation: "외식·숙박 비중, 외식업 증가율, 업종구성 전환도, 생활밀착업종 감소가 동시에 나타나는지를 분기별로 점검합니다.",
         indicators: "외식업 비중, 외식업 증가율, 숙박업 비중, 업종구성 전환도"
       },
       "전환 신호 발생 시 A 패키지 발동": {
-        summary: "방문 급증형 상권에서 업종 치환이 확인될 경우 업종 관광화 대응 패키지로 전환하는 기준이다.",
-        purpose: "초기 혼잡 관리 단계에서 사후 치환 대응 단계로 넘어가는 정책 시점을 명확히 한다.",
-        operation: "관광소비압력과 거주취약이 함께 상승하고 생활밀착업종 감소가 확인되면 장기안심상가, 상생협약, 앵커시설 확보를 우선 검토한다.",
+        summary: "방문 집중형 상권에서 업종 관광화 지표가 함께 높아질 경우 업종 관광화 대응 패키지로 전환하는 기준입니다.",
+        purpose: "초기 혼잡 관리 단계에서 사후 치환 대응 단계로 넘어가는 정책 시점을 명확히 합니다.",
+        operation: "관광소비압력과 거주취약이 함께 상승하고 생활밀착업종 감소가 확인되면 장기안심상가, 상생협약, 앵커시설 확보를 우선 검토합니다.",
         indicators: "관광소비압력, 거주취약 점수, 생활밀착업종 감소, 개폐업 회전율"
       },
       "단기 이벤트 집중구간 모니터링": {
-        summary: "축제, 팝업, 대형 행사처럼 일시적으로 방문 수요가 폭증하는 구간을 따로 관찰하는 수단이다.",
-        purpose: "상시적 관광화와 일시적 이벤트 효과를 구분해 과잉 대응을 줄인다.",
-        operation: "행사 기간 전후 유동인구, 민원, 매출, 야간 혼잡을 비교하고 반복적으로 압력이 쌓이는 구간만 후속 관리 대상으로 올린다.",
+        summary: "축제, 팝업, 대형 행사처럼 일시적으로 방문 수요가 집중되는 구간을 따로 관찰하는 수단입니다.",
+        purpose: "상시적 관광화와 일시적 이벤트 효과를 구분해 과잉 대응을 줄입니다.",
+        operation: "행사 기간 전후 유동인구, 민원, 매출, 야간 혼잡을 비교하고 반복적으로 압력이 쌓이는 구간만 후속 관리 대상으로 올립니다.",
         indicators: "이벤트 전후 유동인구 증가율, 방문집중도, 민원, 개폐업 회전율"
       },
       "주거지 인접 동선 분산": {
-        summary: "관광 노출이 있는 상권에서 방문 흐름이 주거 골목으로 들어가는 것을 줄이는 생활권 보호 수단이다.",
-        purpose: "거주취약이 아직 낮은 상권에서 생활환경 악화를 예방하고 주민 수용성을 높인다.",
-        operation: "주거지 인접 골목은 우회 안내를 두고 상업가로·대중교통축 중심으로 이동 흐름을 유도한다.",
+        summary: "관광 노출이 있는 상권에서 방문 흐름이 주거 골목으로 들어가는 것을 줄이는 생활권 보호 수단입니다.",
+        purpose: "거주취약이 아직 낮은 상권에서 생활환경 악화를 예방하고 주민 수용성을 높입니다.",
+        operation: "주거지 인접 골목은 우회 안내를 두고 상업가로·대중교통축 중심으로 이동 흐름을 유도합니다.",
         indicators: "주거지 인접 유동, 야간 유동, 민원, 방문집중도"
       },
       "정온구역·생활환경 관리": {
-        summary: "소음과 야간 혼잡에 민감한 주거 인접 구간을 정온 관리 대상으로 두는 방식이다.",
-        purpose: "관광 노출이 주거 만족도 저하로 이어지기 전에 생활환경 리스크를 낮춘다.",
-        operation: "야간 소음 안내, 단체 방문 자제 안내, 쓰레기·흡연 관리, 촬영·대기 행위 계도를 구역 특성에 맞춰 운영한다.",
+        summary: "소음과 야간 혼잡에 민감한 주거 인접 구간을 정온 관리 대상으로 두는 방식입니다.",
+        purpose: "관광 노출이 주거 만족도 저하로 이어지기 전에 생활환경 리스크를 낮춥니다.",
+        operation: "야간 소음 안내, 단체 방문 자제 안내, 쓰레기·흡연 관리, 촬영·대기 행위 계도를 구역 특성에 맞춰 운영합니다.",
         indicators: "야간 민원, 소음 민원, 쓰레기 민원, 방문집중도"
       },
       "혼잡 민원 및 단기 체류 압력 점검": {
-        summary: "데이터상 방문 압력과 실제 현장 민원이 일치하는지 확인하는 현장 검증 절차다.",
-        purpose: "지표만으로 위험을 확정하지 않고 주민 체감 문제와 행정 민원을 함께 확인한다.",
-        operation: "혼잡·소음·쓰레기·불법 주정차 민원을 분기별 위험도와 대조하고, 불일치 지역은 현장조사로 원인을 확인한다.",
+        summary: "데이터상 방문 압력과 실제 현장 민원이 일치하는지 확인하는 현장 검증 절차입니다.",
+        purpose: "지표만으로 위험을 확정하지 않고 주민 체감 문제와 행정 민원을 함께 확인합니다.",
+        operation: "혼잡·소음·쓰레기·불법 주정차 민원을 분기별 위험도와 대조하고, 불일치 지역은 현장조사로 원인을 확인합니다.",
         indicators: "민원 유형별 건수, 방문집중도, 유동인구 증가율, 시간대별 체류"
       },
       "A/B 유형 전환 여부 분기별 확인": {
-        summary: "저강도 관리 대상이 업종 관광화형 또는 방문 급증형으로 바뀌는지 주기적으로 확인하는 절차다.",
-        purpose: "현재 위험이 낮더라도 급격한 상권 변화를 놓치지 않도록 조기경보 체계를 유지한다.",
-        operation: "분기별 위험도, 관광소비압력, 방문압력, 거주취약 점수를 비교해 등급·유형 상승 여부를 검토한다.",
+        summary: "저강도 관리 대상이 업종 관광화형 또는 방문 집중형으로 바뀌는지 주기적으로 확인하는 절차입니다.",
+        purpose: "현재 위험이 낮더라도 급격한 상권 변화를 놓치지 않도록 조기경보 체계를 유지합니다.",
+        operation: "분기별 위험도, 관광소비압력, 방문압력, 거주취약 점수를 비교해 등급·유형 상승 여부를 검토합니다.",
         indicators: "위험도 등급, 관광소비압력, 방문압력, 거주취약 점수"
       },
       "분기별 지표 점검": {
-        summary: "아직 고위험 구조가 뚜렷하지 않은 상권을 낮은 강도로 추적하는 기본 모니터링이다.",
-        purpose: "위험 징후가 약한 상권도 갑작스러운 변화가 생기면 빠르게 포착한다.",
-        operation: "각 분기 말 위험도와 핵심 지표를 갱신하고 전분기 대비 급등 지표가 있는지 확인한다.",
+        summary: "아직 고위험 구조가 뚜렷하지 않은 상권을 낮은 강도로 추적하는 기본 모니터링입니다.",
+        purpose: "위험 징후가 약한 상권도 갑작스러운 변화가 생기면 빠르게 포착합니다.",
+        operation: "각 분기 말 위험도와 핵심 지표를 갱신하고 전분기 대비 급등 지표가 있는지 확인합니다.",
         indicators: "위험도, 점포수 변화율, 외식업 증가율, 업종구성 전환도"
       },
       "생활밀착업종 감소 여부 확인": {
-        summary: "주민 생활에 필요한 업종이 줄어드는지를 별도로 확인해 관광화의 생활권 영향을 검증하는 절차다.",
-        purpose: "단순 상권 성장과 주민 생활기반 약화를 구분한다.",
-        operation: "약국, 세탁, 마트, 의원, 학원 등 생활밀착업종 수와 비중의 분기별 변화를 확인하고 감소가 누적되면 보호 수단을 검토한다.",
+        summary: "주민 생활에 필요한 업종이 줄어드는지를 별도로 확인해 관광화의 생활권 영향을 검증하는 절차입니다.",
+        purpose: "단순 상권 성장과 주민 생활기반 약화를 구분합니다.",
+        operation: "약국, 세탁, 마트, 의원, 학원 등 생활밀착업종 수와 비중의 분기별 변화를 확인하고 감소가 누적되면 보호 수단을 검토합니다.",
         indicators: "생활밀착업종 수 변화, 생활밀착업종 비중, 업종구성 전환도"
       },
       "위험 등급 상승 시 유형 재분류": {
-        summary: "정상·주의 상권이 경계·위험으로 올라갈 경우 어떤 압력이 주도했는지 다시 분류하는 절차다.",
-        purpose: "등급 상승 원인에 맞는 정책 패키지를 선택하기 위해 방문형과 업종 관광화형을 구분한다.",
-        operation: "상승 직전 2개 분기와 현재 분기의 관광소비압력, 방문압력, 성장과열압력, 거주취약을 비교해 유형을 갱신한다.",
+        summary: "정상·주의 상권이 경계·위험으로 올라갈 경우 어떤 압력이 주도했는지 다시 분류하는 절차입니다.",
+        purpose: "등급 상승 원인에 맞는 정책 패키지를 선택하기 위해 방문 집중형과 업종 관광화형을 구분합니다.",
+        operation: "상승 직전 2개 분기와 현재 분기의 관광소비압력, 방문압력, 성장과열압력, 거주취약을 비교해 유형을 갱신합니다.",
         indicators: "등급 변화, 관광소비압력, 방문압력, 성장과열압력, 거주취약 점수"
       },
       "현장조사 후보군으로 보류": {
-        summary: "데이터만으로 즉시 개입하기 애매한 상권을 현장 확인 후보로 남겨두는 판단이다.",
-        purpose: "과잉 개입을 피하면서도 데이터상 이상 신호가 있는 곳을 관리 목록에서 놓치지 않는다.",
-        operation: "등급이 상승하거나 주요 지표가 급등할 때 현장조사, 주민·상인 인터뷰, 민원 자료 확인 대상으로 전환한다.",
+        summary: "데이터만으로 즉시 개입하기 애매한 상권을 현장 확인 후보로 남겨두는 판단입니다.",
+        purpose: "과잉 개입을 피하면서도 데이터상 이상 신호가 있는 곳을 관리 목록에서 놓치지 않습니다.",
+        operation: "등급이 상승하거나 주요 지표가 급등할 때 현장조사, 주민·상인 인터뷰, 민원 자료 확인 대상으로 전환합니다.",
         indicators: "위험도 변화, 주요 지표 급등, 민원, 현장조사 필요성"
       }
     };
@@ -2690,98 +2705,98 @@
       "structure-a": {
         group: "상권 구조 유형",
         title: "유형 A · 업종 관광화형",
-        summary: "외식·숙박 등 관광소비 업종의 비중이나 전환 신호가 이미 높은 상권이다.",
-        meaning: "방문객 수 증가보다 업종 구성 자체가 관광 소비 중심으로 바뀌는 현상이 핵심이다. 생활밀착업종이 밀려나고 관광객 대상 업종이 고착될 가능성이 크다.",
-        policy: "혼잡 관리만으로는 부족하므로 장기안심상가, 상생협약, 앵커시설 확보, 생활밀착업종 보호처럼 업종 치환을 직접 늦추는 정책을 우선 검토한다.",
-        use: "관광소비압력, 외식업 비중, 숙박업 비중, 프랜차이즈 비율, 업종구성 전환도, 거주취약 점수를 함께 확인한다."
+        summary: "외식·숙박 등 방문객 지향 업종 관련 지표가 상대적으로 높은 상권입니다.",
+        meaning: "외식업 비중, 숙박업 비중, 외식업 증가율, 프랜차이즈 비율 등 업종 관광화 관련 지표가 분석 대상 상권 안에서 상대적으로 높게 나타나는 경우입니다. 업종 전환이 확정되었다는 판정보다는 업종 구성 변화 가능성이 비교적 큰 상권으로 해석합니다.",
+        policy: "혼잡 관리만으로는 포착하기 어려운 업종 구성 변화를 함께 보면서 장기안심상가, 상생협약, 앵커시설 확보, 생활밀착업종 보호처럼 업종 치환을 완화할 수 있는 정책을 우선 검토합니다.",
+        use: "관광소비압력, 외식업 비중, 숙박업 비중, 프랜차이즈 비율, 업종구성 전환도, 거주취약 점수를 함께 확인합니다."
       },
       "structure-b": {
         group: "상권 구조 유형",
-        title: "유형 B · 방문 급증형",
-        summary: "방문집중도와 유동인구 압력은 높지만 업종 관광화가 아직 확정적으로 굳어진 단계는 아닌 상권이다.",
-        meaning: "관광객 또는 외부 방문자의 유입이 빠르게 늘지만, 이를 곧바로 주민 이탈이나 업종 치환의 결과로 해석하기는 이르다.",
-        policy: "방문객 총량 규제보다 보행 동선 분산, 쓰레기·소음·야간안전 관리, 단기 이벤트 모니터링을 우선 적용하고 A유형 전환 신호를 감시한다.",
-        use: "방문집중도, 유동인구 증가율, 야간·주말 혼잡, 외식·숙박 비중 상승 전환 여부를 함께 본다."
+        title: "유형 B · 방문 집중형",
+        summary: "방문 관련 지표는 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권입니다.",
+        meaning: "방문집중도와 유동인구 증가율 등 방문 관련 지표가 상대적으로 높게 나타나지만, 외식·숙박 등 업종 관광화 관련 지표는 그보다 낮게 나타나는 경우입니다. 주민 이탈이나 업종 치환이 확인됐다는 의미가 아니라 방문 압력 관리와 전환 신호 관찰이 필요한 상권으로 해석합니다.",
+        policy: "방문객 총량 규제보다 보행 동선 분산, 쓰레기·소음·야간안전 관리, 단기 이벤트 모니터링을 우선 적용하고 업종 관광화 지표가 함께 상승하는지를 감시합니다.",
+        use: "방문집중도, 유동인구 증가율, 야간·주말 혼잡, 외식·숙박 비중 상승 전환 여부를 함께 봅니다."
       },
       "structure-unclassified": {
         group: "상권 구조 유형",
         title: "유형 미분류",
-        summary: "유형 A 또는 유형 B로 단정할 만큼 관광화 구조가 뚜렷하지 않은 상권이다.",
-        meaning: "현재 데이터상 특정 관광화 경로가 강하게 드러나지 않는다. 다만 일부 지표가 움직일 수 있으므로 완전히 정책 관심 밖으로 두지는 않는다.",
-        policy: "즉각적 개입보다 기본 모니터링을 적용하고, 위험 등급이 상승하거나 특정 압력이 급등할 때 유형을 재분류한다.",
-        use: "위험도 등급 변화, 업종구성 전환도, 개폐업 회전율, 외식업 증가율을 분기별로 확인한다."
+        summary: "두 유형 중 어느 한쪽의 특성이 뚜렷하지 않은 상권입니다.",
+        meaning: "현재 데이터에서는 업종 관광화형 또는 방문 집중형 중 어느 한쪽으로 분류할 만큼 지표 특성이 뚜렷하게 나타나지 않습니다. 낮은 위험이라는 단정보다는 분기별 변화와 현장 정보를 함께 확인해야 하는 상태로 해석합니다.",
+        policy: "즉각적 개입보다 기본 모니터링을 적용하고, 위험 등급이 상승하거나 특정 압력이 급등할 때 유형을 재분류합니다.",
+        use: "위험도 등급 변화, 업종구성 전환도, 개폐업 회전율, 외식업 증가율을 분기별로 확인합니다."
       },
       "package-a": {
         group: "정책 패키징 유형",
         title: "A 패키지 · 업종 관광화 대응",
-        summary: "관광소비 업종으로의 치환과 거주취약이 함께 나타나는 상권에 적용하는 직접 대응 패키지다.",
-        meaning: "상권의 문제가 단순 방문 증가가 아니라 업종 구조 변화와 생활기반 약화로 이어질 가능성이 큰 상태다.",
-        policy: "장기안심상가, 지역상생협약, 앵커시설 매입·임대, 생활밀착업종 보호구역 검토처럼 기존 점포와 생활서비스를 지키는 수단을 묶어 검토한다.",
-        use: "외식업 비중·증가율, 숙박업 비중, 프랜차이즈 비율, 업종구성 전환도, 거주취약 점수가 높은지 확인한다."
+        summary: "관광소비 업종으로의 치환과 거주취약이 함께 나타나는 상권에 적용하는 직접 대응 패키지입니다.",
+        meaning: "상권의 문제가 단순 방문 증가가 아니라 업종 구조 변화와 생활기반 약화로 이어질 가능성이 큰 상태입니다.",
+        policy: "장기안심상가, 지역상생협약, 앵커시설 매입·임대, 생활밀착업종 보호구역 검토처럼 기존 점포와 생활서비스를 지키는 수단을 묶어 검토합니다.",
+        use: "외식업 비중·증가율, 숙박업 비중, 프랜차이즈 비율, 업종구성 전환도, 거주취약 점수가 높은지 확인합니다."
       },
       "package-b": {
         group: "정책 패키징 유형",
-        title: "B 패키지 · 방문 급증 관리",
-        summary: "방문 압력이 큰 상권에서 혼잡과 생활환경 문제를 우선 관리하는 패키지다.",
-        meaning: "현재 핵심 문제는 업종 치환보다 방문객 집중에서 발생하는 보행, 소음, 쓰레기, 야간 안전 문제일 가능성이 크다.",
-        policy: "보행 동선 분산, 안내체계 정비, 쓰레기·소음 관리, 단기 이벤트 집중구간 모니터링을 적용하고 A유형 전환 여부를 별도로 감시한다.",
-        use: "방문집중도, 유동인구 증가율, 야간·주말 혼잡 관련 지표, 외식·숙박 비중 상승 전환 여부를 확인한다."
+        title: "B 패키지 · 방문 집중 관리",
+        summary: "방문 관련 지표가 높은 상권에서 혼잡과 생활환경 문제를 우선 관리하는 패키지입니다.",
+        meaning: "현재 핵심 문제는 업종 치환보다 방문객 집중에서 발생하는 보행, 소음, 쓰레기, 야간 안전 문제일 가능성이 큽니다.",
+        policy: "보행 동선 분산, 안내체계 정비, 쓰레기·소음 관리, 단기 이벤트 집중구간 모니터링을 적용하고 A유형 전환 여부를 별도로 감시합니다.",
+        use: "방문집중도, 유동인구 증가율, 야간·주말 혼잡 관련 지표, 외식·숙박 비중 상승 전환 여부를 확인합니다."
       },
       "package-c": {
         group: "정책 패키징 유형",
         title: "C 패키지 · 생활환경 보호 모니터링",
-        summary: "관광 노출은 있으나 거주취약이 낮은 상권에 적용하는 예방적 관리 패키지다.",
-        meaning: "관광 압력이 존재하지만 아직 주민 이탈 위험으로 강하게 연결되지는 않은 상태다.",
-        policy: "주거지 인접 동선 분산, 정온구역 관리, 혼잡 민원 점검 등 생활환경 악화를 막는 낮은 강도의 정책을 우선 검토한다.",
-        use: "방문압력, 관광소비압력, 거주취약 점수, 민원, 야간 유동의 변화가 함께 상승하는지 확인한다."
+        summary: "관광 노출은 있으나 거주취약이 낮은 상권에 적용하는 예방적 관리 패키지입니다.",
+        meaning: "관광 압력이 존재하지만 아직 주민 이탈 위험으로 강하게 연결되지는 않은 상태입니다.",
+        policy: "주거지 인접 동선 분산, 정온구역 관리, 혼잡 민원 점검 등 생활환경 악화를 막는 낮은 강도의 정책을 우선 검토합니다.",
+        use: "방문압력, 관광소비압력, 거주취약 점수, 민원, 야간 유동의 변화가 함께 상승하는지 확인합니다."
       },
       "package-basic": {
         group: "정책 패키징 유형",
         title: "기본 패키지 · 상권 변화 모니터링",
-        summary: "고위험 구조가 아직 뚜렷하지 않은 상권을 정기적으로 관찰하기 위한 기본 패키지다.",
-        meaning: "현 시점에서는 강한 정책 개입보다 데이터 변화를 누적해 조기 신호를 포착하는 것이 적절한 상태다.",
-        policy: "분기별 지표 점검, 생활밀착업종 감소 여부 확인, 위험 등급 상승 시 유형 재분류, 현장조사 후보군 보류를 적용한다.",
-        use: "위험도 변화, 외식업 증가율, 점포수 변화율, 개폐업 회전율, 업종구성 전환도를 본다."
+        summary: "고위험 구조가 아직 뚜렷하지 않은 상권을 정기적으로 관찰하기 위한 기본 패키지입니다.",
+        meaning: "현 시점에서는 강한 정책 개입보다 데이터 변화를 누적해 조기 신호를 포착하는 것이 적절한 상태입니다.",
+        policy: "분기별 지표 점검, 생활밀착업종 감소 여부 확인, 위험 등급 상승 시 유형 재분류, 현장조사 후보군 보류를 적용합니다.",
+        use: "위험도 변화, 외식업 증가율, 점포수 변화율, 개폐업 회전율, 업종구성 전환도를 확인합니다."
       },
       "trend-rising": {
         group: "최근 위험도 추세 유형",
         title: "위험 상승형",
-        summary: "최근 3분기 동안 위험도 점수나 등급이 상승하는 흐름이다.",
-        meaning: "현재 등급만으로는 놓칠 수 있는 상승세를 보여준다. 아직 위험 단계가 아니더라도 선제 점검이 필요할 수 있다.",
-        policy: "최근 상승을 이끈 변수를 확인하고, 상승 원인이 방문압력인지 업종전환압력인지에 따라 B 패키지 또는 A 패키지 검토로 연결한다.",
-        use: "2025Q3, 2025Q4, 2026Q1 위험도와 등급 변화를 비교해 상승 폭과 상승 원인을 확인한다."
+        summary: "최근 3분기 동안 위험도 점수 또는 등급이 상승한 것으로 관찰되는 상권입니다.",
+        meaning: "현재 시점의 등급만으로는 놓칠 수 있는 상승 흐름을 보완해서 보여줍니다. 원인을 확정하는 지표가 아니라 선제 점검 필요성을 판단하기 위한 참고 유형입니다.",
+        policy: "최근 상승을 이끈 변수를 확인하고, 상승 원인이 방문압력인지 업종전환압력인지에 따라 B 패키지 또는 A 패키지 검토로 연결합니다.",
+        use: "2025Q3, 2025Q4, 2026Q1 위험도와 등급 변화를 비교해 상승 폭과 상승 원인을 확인합니다."
       },
       "trend-persistent": {
         group: "최근 위험도 추세 유형",
-        title: "고위험 고착형",
-        summary: "최근 3분기 동안 위험·경계권에 계속 머무른 상권이다.",
-        meaning: "일시적 변동보다 구조적 압력과 거주취약이 함께 유지되는 상태로 해석할 수 있다.",
-        policy: "현장조사 우선순위를 높이고, 단기 관리보다 업종·임대·생활환경을 묶은 중기 대응이 필요한지 검토한다.",
-        use: "위험도, 최종압력, 거주취약, 민감도 안정성을 함께 확인해 위험이 안정적으로 높은지 판단한다."
+        title: "고위험 지속형",
+        summary: "최근 3분기 동안 위험·경계권에 지속적으로 위치한 상권입니다.",
+        meaning: "위험도가 단기적으로만 높게 나온 경우와 구분하기 위한 유형입니다. 구조적 원인을 단정하지 않고, 반복적으로 높은 위험도가 나타나는지를 확인하는 용도로 활용합니다.",
+        policy: "현장조사 우선순위를 높이고, 단기 관리보다 업종·임대·생활환경을 묶은 중기 대응이 필요한지 검토합니다.",
+        use: "위험도, 최종압력, 거주취약, 민감도 안정성을 함께 확인해 위험이 안정적으로 높은지 판단합니다."
       },
       "trend-easing": {
         group: "최근 위험도 추세 유형",
         title: "위험 완화형",
-        summary: "최근 3분기 동안 위험도 점수나 등급이 낮아지는 흐름이다.",
-        meaning: "위험이 완화되는 방향이지만 일시적 하락일 수 있으므로 재상승 여부를 확인해야 한다.",
-        policy: "강한 신규 개입보다 기존 조치의 유지, 모니터링, 재상승 신호 점검에 초점을 둔다.",
-        use: "위험도 하락과 함께 외식·숙박 비중, 방문집중도, 개폐업 회전율이 같이 낮아졌는지 확인한다."
+        summary: "최근 3분기 동안 위험도 점수 또는 등급이 낮아진 것으로 관찰되는 상권입니다.",
+        meaning: "위험도가 낮아지는 흐름을 보이지만, 실제 문제가 해소됐다고 단정하지는 않습니다. 일시적 변동인지 지속적인 완화인지 추가 확인이 필요합니다.",
+        policy: "강한 신규 개입보다 기존 조치의 유지, 모니터링, 재상승 신호 점검에 초점을 둡니다.",
+        use: "위험도 하락과 함께 외식·숙박 비중, 방문집중도, 개폐업 회전율이 같이 낮아졌는지 확인합니다."
       },
       "trend-exposure": {
         group: "최근 위험도 추세 유형",
         title: "관광노출 관리형",
-        summary: "관광·방문 관련 압력은 비교적 높지만 거주취약은 낮게 나타나는 상태다.",
-        meaning: "현재는 주민 이탈 위험보다 생활환경 악화나 향후 업종 전환 가능성을 관리해야 하는 단계다.",
-        policy: "방문 동선, 소음, 쓰레기, 야간 안전 등 생활환경 관리 수단을 우선 검토하고, 거주취약 상승 여부를 추적한다.",
-        use: "관광소비압력과 방문압력은 높지만 거주취약 점수가 낮은지, 이후 분기에 거주취약이 상승하는지 확인한다."
+        summary: "관광·방문 관련 지표는 상대적으로 높지만 거주취약 지표는 상대적으로 낮은 상권입니다.",
+        meaning: "현재 데이터상 주민 이탈 위험이 높게 결합된 상태라기보다 생활환경 악화나 향후 업종 전환 가능성을 관찰해야 하는 상권으로 해석합니다.",
+        policy: "방문 동선, 소음, 쓰레기, 야간 안전 등 생활환경 관리 수단을 우선 검토하고, 거주취약 상승 여부를 추적합니다.",
+        use: "관광소비압력과 방문압력은 높지만 거주취약 점수가 낮은지, 이후 분기에 거주취약이 상승하는지 확인합니다."
       },
       "trend-monitoring": {
         group: "최근 위험도 추세 유형",
         title: "모니터링형",
-        summary: "최근 위험도 변화가 크지 않거나 뚜렷한 상승·하락 방향이 없는 상태다.",
-        meaning: "즉각적인 정책 개입보다 지표 변화를 꾸준히 관찰하면서 급격한 전환을 포착하는 것이 적절하다.",
-        policy: "기본 패키지를 적용하고, 특정 지표가 급등하거나 등급이 상승하면 구조 유형과 정책 패키지를 다시 판단한다.",
-        use: "분기별 위험도, 업종구성 전환도, 개폐업 회전율, 점포수 변화율을 정기적으로 확인한다."
+        summary: "최근 위험도 변화가 크지 않거나 뚜렷한 상승·하락 방향이 관찰되지 않는 상권입니다.",
+        meaning: "즉각적인 정책 개입보다 지표 변화를 꾸준히 관찰하면서 급격한 전환을 포착하는 것이 적절합니다.",
+        policy: "기본 패키지를 적용하고, 특정 지표가 급등하거나 등급이 상승하면 구조 유형과 정책 패키지를 다시 판단합니다.",
+        use: "분기별 위험도, 업종구성 전환도, 개폐업 회전율, 점포수 변화율을 정기적으로 확인합니다."
       }
     };
     let activePreset = "reset";
@@ -3067,16 +3082,16 @@
           key: "rising",
           label: "위험 상승형",
           delta,
-          text: `최근 ${quarterText} 기준 위험도가 ${fmt1(firstRisk)}점에서 ${fmt1(latestRisk)}점으로 ${moveText} 변했다. 등급 또는 점수가 상승해 선제 대응 검토가 필요한 흐름이다.`
+          text: `최근 ${quarterText} 기준 위험도가 ${fmt1(firstRisk)}점에서 ${fmt1(latestRisk)}점으로 ${moveText} 변했습니다. 등급 또는 점수가 상승한 것으로 관찰되어 선제 점검을 검토할 수 있는 흐름입니다.`
         };
       }
       if (latestLevel >= 2 && highCount === work.length) {
         return {
           rows: work,
           key: "persistent",
-          label: "고위험 고착형",
+          label: "고위험 지속형",
           delta,
-          text: `최근 ${quarterText} 동안 위험·경계권에 머물렀다. 단기 변동보다 구조적 압력과 거주취약이 함께 유지되는 상권으로 해석할 수 있다.`
+          text: `최근 ${quarterText} 동안 위험·경계권에 지속적으로 위치했습니다. 단기 변동만으로 보기 어려운 높은 위험도가 반복적으로 관찰되는 상권으로 해석할 수 있습니다.`
         };
       }
       if (latestLevel < firstLevel || delta <= -3) {
@@ -3085,7 +3100,7 @@
           key: "easing",
           label: "위험 완화형",
           delta,
-          text: `최근 ${quarterText} 기준 위험도가 ${fmt1(firstRisk)}점에서 ${fmt1(latestRisk)}점으로 ${moveText} 변했다. 위험은 완화됐지만 재상승 여부를 계속 확인할 필요가 있다.`
+          text: `최근 ${quarterText} 기준 위험도가 ${fmt1(firstRisk)}점에서 ${fmt1(latestRisk)}점으로 ${moveText} 변했습니다. 위험도 지표는 낮아진 것으로 관찰되지만 재상승 여부를 계속 확인할 필요가 있습니다.`
         };
       }
       if ((tourism >= 0.55 || visit >= 0.65) && resident < 0.35) {
@@ -3094,7 +3109,7 @@
           key: "exposure",
           label: "관광노출 관리형",
           delta,
-          text: `관광·방문 관련 압력은 비교적 높지만 현재 거주취약은 낮게 나타난다. 주민 이탈 위험보다 생활환경 관리와 전환 신호 감시가 우선인 상권이다.`
+          text: `관광·방문 관련 지표는 비교적 높지만 현재 거주취약 지표는 낮게 나타납니다. 주민 이탈 위험보다 생활환경 관리와 전환 신호 감시를 우선 검토할 수 있는 상권입니다.`
         };
       }
       return {
@@ -3102,7 +3117,7 @@
         key: "monitoring",
         label: "모니터링형",
         delta,
-        text: `최근 ${quarterText} 기준 위험도 변화는 ${moveText} 수준이다. 급격한 등급 전환보다는 지표 변동을 누적 관찰하는 방식이 적절하다.`
+        text: `최근 ${quarterText} 기준 위험도 변화는 ${moveText} 수준입니다. 뚜렷한 등급 전환보다 지표 변동을 누적 관찰하는 방식이 적절합니다.`
       };
     }
 
@@ -3186,11 +3201,11 @@
       const aTransitionSignal = tourism >= 0.52 && resident >= 0.65;
       if (isTypeB) {
         const transitionNote = aTransitionSignal
-          ? " 다만 관광소비압력과 거주취약이 동시에 높아 A유형 전환 신호는 별도로 감시한다."
+          ? " 다만 관광소비압력과 거주취약이 동시에 높아 A유형 전환 신호는 별도로 감시합니다."
           : "";
         return {
-          title: "B 패키지 · 방문 급증 관리",
-          summary: `방문 압력은 크지만 업종 전환이 아직 확정적으로 굳어진 단계는 아니다. 방문객 총량 규제보다 혼잡 관리와 A유형 전환 신호 감시가 우선이다.${transitionNote}`,
+          title: "B 패키지 · 방문 집중 관리",
+          summary: `방문 관련 압력은 상대적으로 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권입니다. 방문객 총량 규제보다 혼잡 관리와 A유형 전환 신호 감시가 우선입니다.${transitionNote}`,
           targets: ["방문집중도", "유동인구 증가율", "외식·숙박 비중의 상승 전환", "개폐업 회전율"],
           actions: ["보행 동선 분산과 안내체계 정비", "쓰레기·소음·야간안전 관리", "A유형 전환 신호 확인 시 A 패키지 별도 검토", "단기 이벤트 집중구간 모니터링"],
           vals: { visit: -12, flow: -10, fnbGrowth: -5, turnover: -4 }
@@ -3199,7 +3214,7 @@
       if (isTypeA || aTransitionSignal) {
         return {
           title: "A 패키지 · 업종 관광화 대응",
-          summary: "외식·숙박 중심의 상권 전환과 거주취약이 함께 나타나는 상권이다. 치환 채널이 이미 작동 중인 것으로 보고 직접 대응 수단을 우선 검토한다.",
+          summary: "업종 관광화 관련 지표와 거주취약이 함께 높게 나타나는 상권입니다. 업종 치환 가능성을 고려해 직접 대응 수단을 우선 검토합니다.",
           targets: ["외식업 비중과 외식업 증가율", "숙박업 비중", "프랜차이즈 비율", "업종구성 전환도와 개폐업 회전율"],
           actions: ["장기안심상가 및 상생협약", "앵커시설 매입·임대", "생활밀착업종 보호구역 검토", "상가임대차 분쟁조정 연계"],
           vals: { lodging: -6, fnb: -8, fnbGrowth: -12, franchise: -8, turnover: -6, mix: -7 }
@@ -3207,8 +3222,8 @@
       }
       if (trajectory.key === "rising" || visit >= 0.65) {
         return {
-          title: "B 패키지 · 방문 급증 관리",
-          summary: "방문 압력은 크지만 업종 전환이 아직 확정적으로 굳어진 단계는 아니다. 방문객 총량 규제보다 혼잡 관리와 A유형 전환 신호 감시가 우선이다.",
+          title: "B 패키지 · 방문 집중 관리",
+          summary: "방문 관련 압력은 상대적으로 높지만 업종 관광화 관련 지표는 상대적으로 낮은 상권입니다. 방문객 총량 규제보다 혼잡 관리와 A유형 전환 신호 감시가 우선입니다.",
           targets: ["방문집중도", "유동인구 증가율", "외식·숙박 비중의 상승 전환", "개폐업 회전율"],
           actions: ["보행 동선 분산과 안내체계 정비", "쓰레기·소음·야간안전 관리", "전환 신호 발생 시 A 패키지 발동", "단기 이벤트 집중구간 모니터링"],
           vals: { visit: -12, flow: -10, fnbGrowth: -5, turnover: -4 }
@@ -3217,7 +3232,7 @@
       if (trajectory.key === "exposure" || ((tourism >= 0.50 || visit >= 0.55) && resident < 0.35)) {
         return {
           title: "C 패키지 · 생활환경 보호 모니터링",
-          summary: "관광 노출은 있으나 거주취약이 낮은 상권이다. 주민 이탈 대응보다 생활환경 악화와 업종 전환 신호를 먼저 관리한다.",
+          summary: "관광 노출은 있으나 거주취약이 낮은 상권입니다. 주민 이탈 대응보다 생활환경 악화와 업종 전환 신호를 먼저 관리합니다.",
           targets: ["방문집중도와 유동인구 증가율", "야간·주말 혼잡 관련 지표", "외식·숙박 비중 상승 전환", "개폐업 회전율"],
           actions: ["주거지 인접 동선 분산", "정온구역·생활환경 관리", "혼잡 민원 및 단기 체류 압력 점검", "A/B 유형 전환 여부 분기별 확인"],
           vals: { visit: -8, flow: -6, turnover: -3 }
@@ -3225,7 +3240,7 @@
       }
       return {
         title: "기본 패키지 · 상권 변화 모니터링",
-        summary: "현재는 뚜렷한 고위험 구조보다 변동 관찰이 필요한 상권이다. 급격한 전환을 조기 포착하는 낮은 강도의 모니터링을 적용한다.",
+        summary: "현재는 뚜렷한 고위험 구조보다 변동 관찰이 필요한 상권입니다. 급격한 전환을 조기 포착하는 낮은 강도의 모니터링을 적용합니다.",
         targets: ["업종구성 전환도", "개폐업 회전율", "외식업 증가율", "점포수 변화율"],
         actions: ["분기별 지표 점검", "생활밀착업종 감소 여부 확인", "위험 등급 상승 시 유형 재분류", "현장조사 후보군으로 보류"],
         vals: { fnbGrowth: -4, turnover: -4, mix: -4 }
@@ -3279,9 +3294,9 @@
 
     function openPolicyModal(title) {
       const detail = policyDetails[title] || {
-        summary: "선택한 검토 수단의 세부 적용 방식은 현장 여건과 관련 제도를 함께 확인해 결정한다.",
-        purpose: "위험도 산식에서 포착된 압력과 실제 현장 문제를 연결해 정책 우선순위를 검토한다.",
-        operation: "담당 부서가 현장조사, 민원, 관련 조례·제도 적용 가능성을 확인한 뒤 세부 실행안을 정한다.",
+        summary: "선택한 검토 수단의 세부 적용 방식은 현장 여건과 관련 제도를 함께 확인해 결정합니다.",
+        purpose: "위험도 산식에서 포착된 압력과 실제 현장 문제를 연결해 정책 우선순위를 검토합니다.",
+        operation: "담당 부서가 현장조사, 민원, 관련 조례·제도 적용 가능성을 확인한 뒤 세부 실행안을 정합니다.",
         indicators: "위험도, 관련 압력 지표, 민원, 현장조사 결과"
       };
       openInfoModal({
@@ -3371,7 +3386,7 @@
     function policyScenarioHint(m) {
       const trajectory = scenarioTrajectoryInfo(m);
       const policy = policyPackageForMarket(m, trajectory);
-      return `${policy.title}을 우선 검토할 수 있다. 권장 또는 강화 패키지 버튼을 누르면 해당 패키지가 겨냥하는 지표 조정 가정이 적용된다.`;
+      return `${policy.title}을 우선 검토할 수 있습니다. 권장 또는 강화 패키지 버튼을 누르면 해당 패키지가 겨냥하는 지표 조정 가정이 적용됩니다.`;
     }
 
     function findGradeShiftScenario(m, weights, direction) {
@@ -3385,7 +3400,7 @@
           vals: blankScenarioValues(),
           risk: baseRisk,
           grade: baseGrade,
-          note: "현재 정상 등급이라 산식상 더 낮출 등급이 없다."
+          note: "현재 정상 등급이라 산식상 더 낮출 등급이 없습니다."
         };
       }
       if (direction === "up" && baseLevel === 3) {
@@ -3394,7 +3409,7 @@
           vals: blankScenarioValues(),
           risk: baseRisk,
           grade: baseGrade,
-          note: "현재 위험 등급이라 산식상 더 높은 등급이 없다."
+          note: "현재 위험 등급이라 산식상 더 높은 등급이 없습니다."
         };
       }
       const variables = scenarioVariables
@@ -3414,7 +3429,7 @@
           vals: blankScenarioValues(),
           risk: baseRisk,
           grade: baseGrade,
-          note: "현재 선택 상권에서는 조절 가능한 방향의 위험도 변화가 계산되지 않는다."
+        note: "현재 선택 상권에서는 조절 가능한 방향의 위험도 변화가 계산되지 않습니다."
         };
       }
 
@@ -3474,7 +3489,7 @@
       return {
         ...fallback,
         achieved: false,
-        note: `${label} 조합을 최대 ${maxActive}개 변수·각 ${maxAbs}%p 범위에서 탐색했지만 등급은 ${baseGrade}로 유지된다. 가장 큰 변화 조합은 ${scenarioDeltaText(fallback.vals)}이며 산식상 위험도는 ${fmt1(baseRisk)}점 → ${fmt1(fallback.risk)}점이다.`
+        note: `${label} 조합을 최대 ${maxActive}개 변수·각 ${maxAbs}%p 범위에서 탐색했지만 등급은 ${baseGrade}로 유지됩니다. 가장 큰 변화 조합은 ${scenarioDeltaText(fallback.vals)}이며 산식상 위험도는 ${fmt1(baseRisk)}점 → ${fmt1(fallback.risk)}점입니다.`
       };
     }
 
@@ -3497,7 +3512,7 @@
       const beforeGrade = gradeByRisk(beforeRisk);
       const afterGrade = gradeByRisk(afterRisk);
       setScenarioValues(vals);
-      activeScenarioNote = `${kind === "strong" ? "강화" : "권장"} ${policy.title} 가정: ${scenarioDeltaText(vals)}. 산식상 위험도는 ${fmt1(beforeRisk)}점에서 ${fmt1(afterRisk)}점으로 ${afterRisk >= beforeRisk ? "+" : ""}${fmt1(afterRisk - beforeRisk)}점 변하고, 등급은 ${beforeGrade}에서 ${afterGrade}로 계산된다.`;
+      activeScenarioNote = `${kind === "strong" ? "강화" : "권장"} ${policy.title} 가정: ${scenarioDeltaText(vals)}. 산식상 위험도는 ${fmt1(beforeRisk)}점에서 ${fmt1(afterRisk)}점으로 ${afterRisk >= beforeRisk ? "+" : ""}${fmt1(afterRisk - beforeRisk)}점 변하고, 등급은 ${beforeGrade}에서 ${afterGrade}로 계산됩니다.`;
       activePreset = kind;
       updatePresetButtons();
       updateSimulation();
@@ -4075,7 +4090,7 @@
       return marketTypeByCode[String(m.상권_코드)] || {
         label: "유형 미분류",
         className: "is-unclassified",
-        description: "유형 A/B 표에 포함되지 않은 상권"
+        description: "두 유형 중 어느 한쪽의 특성이 뚜렷하지 않은 상권"
       };
     }
 
@@ -4104,7 +4119,7 @@
         .slice(0, 3)
         .map(driver => `${driver.label} ${fmtRawByType(driver.rawValue, driver.type)}(${fmtTopShareText(driver.percentile)})`)
         .join(", ");
-      return `위험도 ${fmt1(m[f.risk])}점은 최종압력 ${fmtPct(m[f.pressure])}와 거주취약 ${fmtPct(m.거주취약_백분위)}이 결합된 결과이다. 거주인구 유지율은 ${fmtPct(m.거주인구_유지율)}이며, 서울시 전체 상권과 비교했을 때 백분위가 특히 높은 지표는 ${evidence} 순으로 나타났다.`;
+      return `위험도 ${fmt1(m[f.risk])}점은 최종압력 ${fmtPct(m[f.pressure])}와 거주취약 ${fmtPct(m.거주취약_백분위)}이 결합된 결과입니다. 거주인구 유지율은 ${fmtPct(m.거주인구_유지율)}이며, 서울시 전체 상권과 비교했을 때 백분위가 특히 높은 지표는 ${evidence} 순으로 나타났습니다.`;
     }
 
     function topRiskLatLng(m) {
@@ -4711,10 +4726,10 @@
       const best = oneStep[0];
       const targetReached = oneStep.find(item => gradeOrder[item.grade] < gradeOrder[beforeGrade]);
       if (beforeGrade === "정상") {
-        return `현재 정상 등급이다. 단일 변수 10%p 감축 기준으로는 ${best.label}을 낮출 때 위험도가 가장 크게 줄어든다(${fmt1(best.drop)}점 감소).`;
+        return `현재 정상 등급입니다. 단일 변수 10%p 감축 기준으로는 ${best.label}을 낮출 때 위험도가 가장 크게 줄어듭니다(${fmt1(best.drop)}점 감소).`;
       }
       if (targetReached) {
-        return `단일 변수 10%p 감축 기준, ${targetReached.label}을 낮추면 ${beforeGrade}에서 ${targetReached.grade}로 완화될 수 있다.`;
+        return `단일 변수 10%p 감축 기준, ${targetReached.label}을 낮추면 ${beforeGrade}에서 ${targetReached.grade}로 완화될 수 있습니다.`;
       }
       const axisTests = [
         ["관광소비 축", { lodging: -10, fnb: -10, fnbGrowth: -10, visit: -10, flow: -10 }],
@@ -4727,9 +4742,9 @@
       }).sort((a, b) => b.drop - a.drop);
       const axisReached = axisTests.find(item => gradeOrder[item.grade] < gradeOrder[beforeGrade]);
       if (axisReached) {
-        return `단일 변수만으로는 등급 완화가 어렵고, ${axisReached.label}을 묶어 10%p 낮추면 ${beforeGrade}에서 ${axisReached.grade}로 낮아질 수 있다.`;
+        return `단일 변수만으로는 등급 완화가 어렵고, ${axisReached.label}을 묶어 10%p 낮추면 ${beforeGrade}에서 ${axisReached.grade}로 낮아질 수 있습니다.`;
       }
-      return `10%p 감축 시나리오에서는 등급이 유지된다. 가장 효과적인 단일 감축 변수는 ${best.label}이며 위험도는 ${fmt1(best.drop)}점 낮아진다.`;
+      return `10%p 감축 시나리오에서는 등급이 유지됩니다. 가장 효과적인 단일 감축 변수는 ${best.label}이며 위험도는 ${fmt1(best.drop)}점 낮아집니다.`;
     }
 
     function updateSimulation() {
